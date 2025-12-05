@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+< lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dreamy Music Player</title>
+    <link rel="stylesheet" href="design.css" />
+  </head>
+
+<body>
+
+  <!-- WRAPPER TẤT CẢ NỘI DUNG -->
+  <div class="page">
+
+    <!-- PLAYER FULL -->
+    <div class="player">
+
+      <div class="player-header">
+        <h1>Dreamy Player</h1>
+        <p class="player-subtitle">lofi • chill • pastel</p>
+      </div>
+
+      <div class="player-main">
+        <div class="cover-wrapper">
+          <div class="cover-outer glow"></div>
+          <div class="cover-inner">
+            <img
+              id="cover"
+              src="https://via.placeholder.com/250x250.png?text=Cover"
+              alt="cover"
+            />
+          </div>
+        </div>
+
+        <div class="track-info">
+          <div class="track-title-wrap">
+            <div class="track-title" id="track-title">Tên bài hát</div>
+          </div>
+          <div class="track-artist" id="track-artist">Tên nghệ sĩ</div>
+        </div>
+
+        <canvas id="waveform"></canvas>
+
+        <div class="time-row">
+          <span id="current-time">0:00</span>
+          <input type="range" id="seek" min="0" max="100" value="0" />
+          <span id="duration">0:00</span>
+        </div>
+
+        <!-- VOLUME -->
+        <div class="volume-row">
+          <span class="volume-label">Vol</span>
+          <input type="range" id="volume" min="0" max="100" value="80" />
+        </div>
+
+        <!-- CONTROLS -->
+        <div class="controls">
+          <button class="btn btn-small icon-btn" id="backward-btn">-10s</button>
+
+          <button class="btn icon-btn" id="prev-btn">&#9664;</button>
+
+          <button class="btn icon-btn btn-main" id="play-btn">&#9654;</button>
+
+          <button class="btn icon-btn" id="next-btn">&#9654;</button>
+
+          <button class="btn btn-small icon-btn" id="forward-btn">+10s</button>
+
+          <button class="btn btn-small icon-btn btn-toggle" id="shuffle-btn">
+            <img id="shuffle-icon" src="bars-scale.svg" alt="Shuffle" />
+          </button>
+
+          <button class="btn btn-small icon-btn btn-toggle" id="repeat-btn">
+            <img id="repeat-icon" src="gooey-balls.svg" alt="Repeat mode" />
+          </button>
+        </div>
+
+        <!-- PLAYLIST -->
+        <ul class="playlist" id="playlist"></ul>
+      </div> <!-- END player-main -->
+
+    </div> <!-- END .player -->
+
+
+
+    <!-- SECTION MEMORIES — xuất hiện khi scroll xuống -->
+    <section class="memories">
+      <div class="memories-inner">
+        <h2 class="memories-title">Những khoảnh khắc chill</h2>
+
+        <div class="memories-grid">
+
+          <!-- Card 1 -->
+          <div class="memory-card memory-left">
+            <div class="memory-image-wrap">
+              <img src="yuyu3.jpg" alt="Chill 1" class="memory-image" />
+            </div>
+            <p class="memory-note">
+              Đêm mưa, nhạc nhỏ, ánh đèn vàng bên cửa sổ.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="memory-card memory-right">
+            <div class="memory-image-wrap">
+              <img src="yuyu4.jpg" alt="Chill 2" class="memory-image" />
+            </div>
+            <p class="memory-note">
+              Chiều muộn, ly matcha, playlist lofi quen thuộc.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="memory-card memory-left">
+            <div class="memory-image-wrap">
+              <img src="yuyu5.jpg" alt="Chill 3" class="memory-image" />
+            </div>
+            <p class="memory-note">
+              Đêm trắng ôn bài nhưng tâm trạng vẫn thật êm.
+            </p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="memory-card memory-right">
+            <div class="memory-image-wrap">
+              <img src="yuyu6.jpg" alt="Chill 4" class="memory-image" />
+            </div>
+            <p class="memory-note">
+              Một ngày lười, chỉ muốn nằm nghe nhạc và thả hồn.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </div> <!-- END .page -->
+
+
+  <!-- AUDIO + SCRIPT -->
+  <audio id="audio"></audio>
+  <script src="player.js"></script>
+
+</body>
+</html>

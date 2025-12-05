@@ -1,0 +1,746 @@
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family:"OreliaDisplay", system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+}
+@font-face {
+  font-family: "OreliaDisplay";
+  src: url("./fonts/SVN-OreliaDisplay.otf");
+  format("opentype");
+
+}
+@font-face {
+  font-family: "SVN-Azuka";
+  src: url("./fonts/SVN-Azuka.otf") 
+  format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SVN-Hoshita";
+  src: url("./fonts/SVN-Hoshita.otf") 
+  format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.player-header h1 {
+  font-family: "SVN-Azuka", "SVN-Hoshita", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 400; /* tùy font */
+  background: linear-gradient(120deg, #ff74b2, #95ff7b);
+  -webkit-background-clip: text;
+  color: rgb(1, 244, 236);
+}
+
+.player-subtitle {
+  font-family: "SVN-Azuka", system-ui, sans-serif;
+  color:#b4e08a;
+}
+.track-title {
+  font-family: "SVN-Azuka", "SVN-Hoshita", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.track-artist {
+  font-family: "SVN-Hoshita", system-ui, sans-serif;
+  font-size: 1.5rem;
+  color:#7fd8ff;
+}
+
+
+.playlist-title {
+  font-family: "SVN-Hoshita", system-ui, sans-serif;
+  font-weight: 1000;
+}
+
+.playlist-artist {
+  font-family: "SVN-Azuka", monospace;
+}
+
+
+
+/* BACKGROUND LIQUID GRADIENT ĐỘNG */
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* KHÔNG dùng align-items: center nữa */
+
+  padding: 32px 16px 40px;
+  position: relative;
+  overflow-x: hidden;
+
+  background:
+    linear-gradient(
+      120deg,
+      rgba(255, 230, 250, 0.8),
+      rgba(255, 240, 250, 0.8),
+      rgba(255, 230, 220, 0.8)
+    ),
+    url("yuyu8.jpg") center/cover no-repeat;
+
+  background-blend-mode: overlay;
+  animation: bgLiquid 22s ease-in-out infinite alternate;
+}
+
+/* LƯU Ý: .page PHẢI Ở NGOÀI body {} CHỨ KHÔNG NẰM TRONG */
+
+.page {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px; /* khoảng cách giữa player và memories */
+}
+
+
+
+
+
+@keyframes bgLiquid {
+  0% {
+    background-position: 0% 0%;
+    filter: hue-rotate(0deg);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: hue-rotate(12deg);
+  }
+  100% {
+    background-position: 0% 100%;
+    filter: hue-rotate(-8deg);
+  }
+}
+
+/* PLAYER WRAPPER */
+.player {
+  width: 360px;
+  max-width: 90vw;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 28px;
+  box-shadow: 0 18px 45px rgba(255, 160, 190, 0.4);
+  padding: 22px 22px 26px;
+  backdrop-filter: blur(18px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* glow nhẹ */
+.player::before {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 176, 213, 0.4), transparent);
+  top: -80px;
+  right: -60px;
+  filter: blur(8px);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* HEADER */
+.player-header h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  background: linear-gradient(120deg, #ff74b2, #ff9f7b);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.player-subtitle {
+  font-size: 0.8rem;
+  color: #b07ea5;
+}
+
+/* MAIN */
+.player-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* COVER -> ĐĨA TRÒN XOAY */
+.cover-wrapper {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cover-outer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 220deg,
+    rgba(255, 148, 193, 0.05),
+    rgba(255, 180, 139, 0.5),
+    rgba(255, 199, 215, 0.9),
+    rgba(255, 148, 193, 0.3)
+  );
+  filter: blur(18px);
+  opacity: 0.9;
+  z-index: 0;
+  transition: transform 0.6s ease, opacity 0.4s ease;
+}
+
+.cover-inner {
+  position: relative;
+  z-index: 1;
+  border-radius: 50%;
+  padding: 10px;
+  background: radial-gradient(circle at 30% 10%, #ffe3f0, #ffc0dd, #ffd1b1);
+  box-shadow: 0 10px 35px rgba(255, 153, 187, 0.5);
+  transition: transform 0.24s ease, opacity 0.24s ease;
+}
+
+.cover-inner img {
+  display: block;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  transform-origin: 50% 50%;
+}
+
+/* lỗ đĩa ở giữa */
+.cover-inner::before {
+  content: "";
+  position: absolute;
+  inset: 50%;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff, #ffd5e6);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.4);
+  z-index: 2;
+}
+
+/* glow animation on play */
+.player.playing .cover-outer {
+  animation: cover-pulse 3.5s ease-in-out infinite;
+}
+
+@keyframes cover-pulse {
+  0% {
+    transform: scale(0.98);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.98);
+    opacity: 0.7;
+  }
+}
+
+/* animation khi chuyển bài */
+.cover-inner.switching {
+  opacity: 0;
+  transform: translateY(16px) scale(0.94) rotate(-2deg);
+}
+
+/* TRACK INFO */
+.track-info {
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* wrapper cho marquee */
+.track-title-wrap {
+  width: 220px;
+  max-width: 80vw;
+  overflow: hidden;
+  margin: 0 auto 2px;
+}
+
+.track-title {
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3f304f;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* marquee khi đang play */
+.track-title.scrolling {
+  animation: title-scroll 9s linear infinite;
+}
+
+@keyframes title-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  10% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.track-artist {
+  font-size: 0.85rem;
+  color: #a07da9;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* khi switching */
+.track-info.switching .track-title,
+.track-info.switching .track-artist {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+/* WAVEFORM CANVAS */
+#waveform {
+  width: 100%;
+  height: 90px;
+  border-radius: 22px;
+  background: radial-gradient(circle at 0% 0%, #ffeaf6, #ffe9d7);
+  box-shadow: inset 0 0 0 1px rgba(255, 192, 203, 0.15);
+}
+
+/* TIME + SEEK */
+.time-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: #b18ab4;
+}
+
+#seek {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff9ecd 0%, #ffe0f0 0%);
+  outline: none;
+  cursor: pointer;
+}
+
+/* track (firefox) */
+#seek::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+/* thumb */
+#seek::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(255, 154, 191, 0.5);
+}
+
+/* thumb firefox */
+#seek::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  box-shadow: 0 0 0 3px rgba(255, 154, 191, 0.5);
+}
+
+/* VOLUME */
+.volume-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: #9fb8a8;
+}
+
+.volume-label {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(200, 240, 215, 0.5);
+}
+
+#volume {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #b4f3cf 80%, #e4fff3 80%);
+  outline: none;
+  cursor: pointer;
+}
+
+/* firefox track */
+#volume::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+/* thumb */
+#volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(159, 218, 186, 0.7);
+}
+
+/* thumb firefox */
+#volume::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  box-shadow: 0 0 0 3px rgba(159, 218, 186, 0.7);
+}
+
+/* CONTROLS */
+.controls {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* BTN */
+.btn {
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 9px 11px;
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(255, 158, 205, 0.45);
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(0);
+  transition:
+    transform 0.14s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease,
+    filter 0.18s ease;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+
+.btn img {
+  width: 15px;
+  height: 15px;
+  pointer-events: none;
+}
+
+.btn-main {
+  padding: 12px 16px;
+  font-size: 1.2rem;
+}
+
+/* nhỏ hơn cho +/-10s, shuffle, repeat */
+.btn-small {
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  box-shadow: 0 4px 12px rgba(255, 158, 205, 0.4);
+}
+
+/* gradient dải từ trái sang phải tương ứng từng nút */
+.controls .btn:nth-child(1) {
+  background: linear-gradient(120deg, #f47acb, #ff99cc);
+}
+.controls .btn:nth-child(2) {
+  background: linear-gradient(120deg, #ff99cc, #ffb38b);
+}
+.controls .btn:nth-child(3) {
+  background: linear-gradient(120deg, #ffb38b, #ffd479);
+}
+.controls .btn:nth-child(4) {
+  background: linear-gradient(120deg, #ffd479, #b4e08a);
+}
+.controls .btn:nth-child(5) {
+  background: linear-gradient(120deg, #b4e08a, #7fd8ff);
+}
+.controls .btn:nth-child(6) {
+  background: linear-gradient(120deg, #7fd8ff, #a78bfa);
+}
+.controls .btn:nth-child(7) {
+  background: linear-gradient(120deg, #a78bfa, #f973b8);
+}
+
+/* hover + active */
+.btn:hover {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 10px 26px rgba(255, 158, 205, 0.55);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.97);
+  box-shadow: 0 4px 12px rgba(255, 158, 205, 0.4);
+  filter: brightness(0.97);
+}
+
+/* ripple cũ trên toàn nút */
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.7), transparent);
+  opacity: 0;
+  transform: scale(0.2);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn:active::after {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* toggle active cho shuffle, repeat */
+.btn-toggle.active {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9),
+    0 0 14px rgba(255, 158, 205, 0.9);
+  filter: brightness(1.08);
+}
+
+/* BUBBLE LAN TỎA TOÀN TRANG */
+.click-bubble {
+  position: fixed;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.95),
+    rgba(255, 173, 212, 0.6),
+    rgba(255, 137, 184, 0)
+  );
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0.95;
+  animation: bubbleSpread 0.9s ease-out forwards;
+  z-index: 9999;
+}
+
+@keyframes bubbleSpread {
+  to {
+    transform: translate(-50%, -50%) scale(7);
+    opacity: 0;
+  }
+}
+
+/* helper */
+.icon-btn {
+  position: relative;
+}
+
+/* PLAYLIST */
+.playlist {
+  margin-top: 10px;
+  width: 100%;
+  max-height: 180px;
+  padding: 6px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: inset 0 0 0 1px rgba(255, 189, 214, 0.3);
+  list-style: none;
+  overflow-y: auto;
+}
+
+.playlist-item {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    transform 0.12s ease,
+    box-shadow 0.15s ease;
+  color: #5b416a;
+  font-size: 0.82rem;
+}
+
+.playlist-item + .playlist-item {
+  margin-top: 4px;
+}
+
+.playlist-item:hover {
+  background: rgba(255, 233, 243, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(255, 173, 212, 0.3);
+}
+
+.playlist-item.active {
+  background: linear-gradient(120deg, #ff9ecd, #ffb58b);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(255, 158, 205, 0.6);
+}
+
+.playlist-title {
+  font-weight: 600;
+}
+
+.playlist-artist {
+  font-size: 0.76rem;
+  opacity: 0.85;
+}
+
+/* RESPONSIVE */
+@media (max-width: 420px) {
+  .player {
+    padding: 18px 15px 22px;
+  }
+  .cover-wrapper {
+    width: 190px;
+    height: 190px;
+  }
+  .cover-inner img {
+    width: 170px;
+    height: 170px;
+  }
+  .track-title-wrap {
+    width: 190px;
+  }
+}
+/* ========== SECTION MEMORIES ========== */
+
+.memories {
+  width: 100%;
+  padding: 0px 4px 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.memories-inner {
+  width: 100%;
+  max-width: 960px;
+}
+
+.memories-title {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  color: #5b416a;
+}
+
+/* GRID 2 CỘT Ở PC, 1 CỘT Ở MOBILE */
+.memories-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .memories-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* CARD CƠ BẢN */
+/* CARD CƠ BẢN */
+.memory-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  box-shadow: 0 10px 24px rgba(177, 131, 170, 0.25);
+  padding: 10px 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  /* ẨN BAN ĐẦU + ĐẨY XUỐNG */
+  opacity: 0;
+  transform: translateY(40px);
+
+  /* MỀM MẠI KHI HIỆN / ẨN */
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s ease-out;
+}
+
+/* KHI Ở TRONG VIEWPORT → HIỆN LÊN */
+.memory-card.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* STAGGER: TRÁI TRƯỚC, PHẢI SAU */
+.memory-left.in-view {
+  transition-delay: 0s;
+}
+
+.memory-right.in-view {
+  transition-delay: 0.12s;
+}
+
+/* HÀNG DƯỚI TRỄ HƠN CHÚT */
+.memories-grid .memory-card:nth-child(3).in-view {
+  transition-delay: 0.18s;
+}
+
+.memories-grid .memory-card:nth-child(4).in-view {
+  transition-delay: 0.28s;
+}
+
+
+/* ẢNH */
+.memory-image-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.memory-image {
+  display: block;
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 0.3s ease;
+}
+
+.memory-card:hover .memory-image {
+  transform: scale(1.06);
+}
+
+/* NOTE */
+.memory-note {
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: #6c5478;
+}
+
+/* ANIMATION TỪ DƯỚI LÊN KHI VÀO VIEWPORT */
+
+
+/* KHI ĐƯỢC JS THÊM CLASS .in-view */
+

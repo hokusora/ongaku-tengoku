@@ -1,4 +1,3 @@
-
 // =================== DOM ELEMENTS ===================
 const audio = document.getElementById("audio");
 const playBtn = document.getElementById("play-btn");
@@ -15,6 +14,8 @@ const currentTimeEl = document.getElementById("current-time");
 const durationEl = document.getElementById("duration");
 const seek = document.getElementById("seek");
 const volumeSlider = document.getElementById("volume");
+const rateSlider = document.getElementById("rate-slider");
+const currentRateEl = document.getElementById("current-rate");
 
 const coverImg = document.getElementById("cover");
 const trackTitle = document.getElementById("track-title");
@@ -23,68 +24,49 @@ const playerRoot = document.querySelector(".player");
 const trackInfo = document.querySelector(".track-info");
 const coverInner = document.querySelector(".cover-inner");
 const playlistEl = document.getElementById("playlist");
+const titleWrap = document.querySelector(".track-title-wrap");
 
 const canvas = document.getElementById("waveform");
 const ctx = canvas.getContext("2d");
 
-// =================== PLAYLIST (8 bài) ===================
+// =================== PLAYLIST ===================
 const tracks = [
-  {
-    title: "Thuốc Tê",
-    artist: "Siren",
-    src: "thuoc-te.mp3",
-    cover: "yuyu.jpg",
-  },
-  {
-    title: "Day By Day",
-    artist: "JOY",
-    src: "day-by-day.mp3",
-    cover: "yuyu2.jpg",
-  },
-  {
-    title: "Wang Liao",
-    artist: "YuYu",
-    src: "wang-liao.mp3",
-    cover: "yuyu3.jpg",
-  },
-  {
-    title: "The Way I Still Love You",
-    artist: "Hattie",
-    src: "The-Way.mp3",
-    cover: "yuyu4.jpg",
-  },
-  {
-    title: "TaBun",
-    artist: "YOASOBI",
-    src: "tabun.mp3",
-    cover: "yuyu5.jpg",
-  },
-  {
-    title: "In The Rain",
-    artist: "XG",
-    src: "in-the-rain.mp3",
-    cover: "yuyu6.jpg",
-  },
-  {
-    title: "Lovesick Girls",
-    artist: "BlackPink",
-    src: "lovesick-girls.mp3",
-    cover: "yuyu7.jpg",
-  },
-  {
-    title: "Love My Friend",
-    artist: "Shayda",
-    src: "lovemyfriend.mp3",
-    cover: "yuyu8.jpg",
-  },
-];
+  { title: "Thuốc Tê", artist: "Siren", src: "thuoc-te.mp3", cover: "pics/yuyu.jpg" },
+  { title: "Day By Day", artist: "JOY", src: "day-by-day.mp3", cover: "pics/yuyu2.jpg" },
+  { title: "Vườn Sao Băng", artist: "puppy", src: "vuonsaobang.mp3", cover: "pics/yuyu3.jpg" },
+  { title: "The Way I Still Love You", artist: "Hattie", src: "The-Way.mp3", cover: "pics/yuyu4.jpg" },
+  { title: "Nếu Lúc Đó", artist: "tlinh", src: "neulucdo.mp3", cover: "pics/yuyu5.jpg" },
+  { title: "In The Rain", artist: "XG", src: "in-the-rain.mp3", cover: "pics/yuyu6.jpg" },
+  { title: "Lovesick Girls", artist: "BlackPink", src: "lovesick-girls.mp3", cover: "pics/yuyu7.jpg" },
+  { title: "Love My Friend", artist: "Shayda", src: "lovemyfriend.mp3", cover: "pics/yuyu8.jpg" },
 
+  // 8 bài mới – ĐỔI LẠI THEO FILE CỦA BẠN
+  { title: "做自己的月亮",  artist: "小蓝背心",  src: "tieulamboitam.mp3",  cover: "pics/dnha2.jpg" },
+  { title: "3107-3", artist: "Umie", src: "31073.mp3", cover: "pics/dnha3.jpg"},
+  { title: "Anh Iu", artist: "Saabirose", src: "anh-iu.mp3", cover: "pics/dnha4.jpg" },
+  { title: "Lucid Dream", artist: "Aespa", src: "lucid-dream.mp3", cover: "pics/dnha6.jpg" },
+  { title: "On Rainy Days", artist: "HEIZE", src: "on-rainy-days.mp3", cover: "pics/dnha7.jpg" },
+  { title: "Chasing Lightning", artist: "Le Sserafim", src: "chasing-lightning.mp3", cover: "pics/dnha8.jpg" },
+  { title: "Wrong Times", artist: "puppy", src: "wrongtimes.mp3", cover: "pics/dnha16.jpg" },
+  { title: "Call Me On My Phone 2", artist: "puppy", src: "callme2.mp3", cover: "pics/dnha20.jpg" },
+
+  { title: "Stairrway To Heaven", artist: "puppy", src: "music/stairwaytoheaven.mp3", cover: "pics/dnha17.jpg"},
+  {title: "Làm lành chữa tình", artist: "tlinh", src: "music/lamlanh.mp3", cover: "pics/dnha18.jpg"},
+  {title: "Bỏ Thuốc Vì Em Nhé", artist: "Kay Chau Anh", src: "music/bo-thuoc.mp3", cover: "pics/dnha13.jpg"},
+  {title: "Giấc Mơ", artist: "Catchellers", src: "music/giacmo.mp3", cover: "pics/dnha14.jpg"},
+      
+   {title: "Miền Mộng Mị", artist: "AMEE", src: "music/mienmongmi.mp3", cover: "pics/yuyu10.jpg"},
+   {title: "Hai Mươi Hai", artist: "AMEE", src: "music/haihai.mp3", cover: "pics/yuyu11.jpg"},
+     {title: "Trời Giấu Trời Mang Đi", artist: "AMEE", src: "music/troigiautroimangdi.mp3", cover: "pics/yuyu9.jpg"},
+     { title: "Thật Quá Đáng Để Yêu", artist: "AMEE", src: "music/quadang.mp3", cover: "pics/dnha22.jpg"},
+ {title: "Ngẩn Nger", artist: "puppy", src: "music/ngannger.mp3", cover: "pics/dnha1.jpg"},
+]
 let currentIndex = 0;
 let isSeeking = false;
 let isShuffle = false;
 let repeatMode = "off"; // off | all | one
 
-// =================== WEB AUDIO API (ANALYSER) ===================
+// =================== WEB AUDIO API ===================
 let audioCtx = null;
 let analyser = null;
 let dataArray = null;
@@ -153,6 +135,9 @@ function updatePlaylistActive() {
 }
 
 // =================== LOAD TRACK ===================
+let titleScrollX = 0;
+let titleScrollDirection = 1;
+
 function loadTrack(index, autoPlay = false) {
   currentIndex = index;
   const track = tracks[index];
@@ -161,9 +146,10 @@ function loadTrack(index, autoPlay = false) {
   trackInfo.classList.add("switching");
   coverInner.classList.add("switching");
 
-  // reset title scroll to đầu
   trackTitle.classList.remove("scrolling");
   trackTitle.style.transform = "translateX(0)";
+  titleScrollX = 0;
+  titleScrollDirection = 1;
 
   setTimeout(() => {
     audio.src = track.src;
@@ -195,19 +181,17 @@ function setPlayingUI(isPlaying) {
     playerRoot.classList.add("playing");
     playBtn.innerHTML = "&#10074;&#10074;";
     isDiscPlaying = true;
-    // bật scroll title
     trackTitle.classList.add("scrolling");
   } else {
     playerRoot.classList.remove("playing");
     playBtn.innerHTML = "&#9654;";
     isDiscPlaying = false;
-    // reset title về vị trí ban đầu
     trackTitle.classList.remove("scrolling");
     trackTitle.style.transform = "translateX(0)";
   }
 }
 
-// khởi tạo
+// Khởi tạo
 loadTrack(currentIndex, false);
 renderPlaylist();
 
@@ -245,7 +229,6 @@ shuffleBtn.addEventListener("click", () => {
 });
 
 repeatBtn.addEventListener("click", () => {
-  // cycle: off -> all -> one -> off
   if (repeatMode === "off") repeatMode = "all";
   else if (repeatMode === "all") repeatMode = "one";
   else repeatMode = "off";
@@ -276,7 +259,6 @@ function getRandomIndex() {
   return idx;
 }
 
-// cho nút Prev/Next thì cứ vòng tròn để dễ dùng
 function getNextIndexButton() {
   if (isShuffle) return getRandomIndex();
   return (currentIndex + 1) % tracks.length;
@@ -300,7 +282,7 @@ nextBtn.addEventListener("click", () => {
   loadTrack(idx, true);
 });
 
-// khi hết bài
+// Khi hết bài
 audio.addEventListener("ended", () => {
   if (repeatMode === "one") {
     loadTrack(currentIndex, true);
@@ -321,7 +303,6 @@ audio.addEventListener("ended", () => {
     if (repeatMode === "all") {
       loadTrack(0, true);
     } else {
-      // repeat off: dừng
       setPlayingUI(false);
       audio.pause();
       audio.currentTime = 0;
@@ -372,9 +353,8 @@ function formatTime(sec) {
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
 
-// thanh thời gian: màu đã phát / chưa phát
 function updateSeekGradient() {
-  const value = seek.value; // 0-100
+  const value = seek.value;
   const playedColor = "#ff9ecd";
   const remainColor = "#ffe0f0";
   seek.style.background = `linear-gradient(90deg, ${playedColor} ${value}%, ${remainColor} ${value}%)`;
@@ -390,7 +370,7 @@ volumeSlider.addEventListener("input", () => {
 });
 
 function updateVolumeGradient() {
-  const value = volumeSlider.value; // 0-100
+  const value = volumeSlider.value;
   const played = "#b4f3cf";
   const remain = "#e4fff3";
   volumeSlider.style.background = `linear-gradient(90deg, ${played} ${value}%, ${remain} ${value}%)`;
@@ -407,7 +387,7 @@ function pulseElement(el) {
   }, 150);
 }
 
-// =================== GLOBAL BUBBLE (CLICK BẤT CỨ ĐÂU) ===================
+// =================== GLOBAL BUBBLE ===================
 function createGlobalBubble(e) {
   const bubble = document.createElement("span");
   bubble.className = "click-bubble";
@@ -422,9 +402,11 @@ document.addEventListener("click", (e) => {
   createGlobalBubble(e);
 });
 
-// =================== ĐĨA XOAY BẰNG JS (GIỮ GÓC KHI PAUSE) ===================
+// =================== ĐĨA XOAY + TITLE SCROLL ===================
+// =================== ĐĨA XOAY + TITLE SCROLL ===================
 let discAngle = 0;
 let lastTime = null;
+const scrollSpeedPxPerSec = 40;
 
 function discLoop(timestamp) {
   if (!lastTime) lastTime = timestamp;
@@ -432,16 +414,49 @@ function discLoop(timestamp) {
   lastTime = timestamp;
 
   if (isDiscPlaying) {
-    const speed = 360 / 9000; // 1 vòng ~ 9s
+    // quay đĩa
+    const speed = 360 / 9000;
     discAngle += speed * delta;
     coverImg.style.transform = `rotate(${discAngle}deg)`;
+
+    // scroll title ping-pong
+    if (titleWrap) {
+      const titleWidth = trackTitle.offsetWidth;
+      const wrapWidth = titleWrap.offsetWidth;
+
+      // khoảng chạy tối đa
+      let maxScroll = titleWidth - wrapWidth;
+
+      // ÉP KHOẢNG CHẠY TỐI THIỂU để luôn có hiệu ứng
+      const MIN_SCROLL = 20;
+      if (maxScroll < MIN_SCROLL) {
+        maxScroll = MIN_SCROLL;
+      }
+
+      const distance = scrollSpeedPxPerSec * (delta / 1000);
+      titleScrollX += distance * titleScrollDirection;
+
+      // ping-pong hai đầu
+      if (titleScrollX > maxScroll) {
+        titleScrollX = maxScroll;
+        titleScrollDirection = -1;
+      } else if (titleScrollX < 0) {
+        titleScrollX = 0;
+        titleScrollDirection = 1;
+      }
+
+      trackTitle.style.transform = `translateX(-${titleScrollX}px)`;
+    }
   }
 
+  // nếu cần dùng audioCtx thêm thì xử lý ở đây
   requestAnimationFrame(discLoop);
 }
 requestAnimationFrame(discLoop);
 
-// =================== LIQUID WAVEFORM (AUDIO-REACTIVE) ===================
+
+
+// =================== LIQUID WAVEFORM ===================
 let t = 0;
 
 function drawLiquidWave() {
@@ -449,13 +464,10 @@ function drawLiquidWave() {
   const h = canvas.height / window.devicePixelRatio;
   ctx.clearRect(0, 0, w, h);
 
-  // nền nhẹ
   ctx.fillStyle = "rgba(255, 255, 255, 0.16)";
   ctx.fillRect(0, 0, w, h);
 
   const cy = h / 2;
-
-  // gradient đổi nhẹ theo thời gian
   const grad = ctx.createLinearGradient(0, 0, w, h);
   const shift = (Math.sin(t * 0.01) + 1) / 2;
   grad.addColorStop(0, `rgba(255, 160, 210, ${0.6 + 0.3 * shift})`);
@@ -465,20 +477,18 @@ function drawLiquidWave() {
   ctx.lineWidth = 2.6;
   ctx.strokeStyle = grad;
 
-  // lấy audio level
   let ampFactor = 0.3;
   if (analyser && !audio.paused && !audio.ended) {
     analyser.getByteFrequencyData(dataArray);
     let sum = 0;
     for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
-    const avg = sum / dataArray.length; // 0–255
+    const avg = sum / dataArray.length;
     ampFactor = 0.25 + (avg / 255) * 0.9;
   }
 
   const baseAmp = (h / 3) * ampFactor;
   const segments = 150;
 
-  // đường chính
   ctx.beginPath();
   for (let i = 0; i <= segments; i++) {
     const x = (w / segments) * i;
@@ -488,7 +498,6 @@ function drawLiquidWave() {
     const sin1 = Math.sin(progress * 6 * Math.PI + offset);
     const sin2 = Math.sin(progress * 13 * Math.PI - offset * 1.4);
     const sin3 = Math.sin(progress * 3 * Math.PI + offset * 0.5);
-
     const envelope = Math.sin(progress * Math.PI);
 
     const y =
@@ -500,7 +509,6 @@ function drawLiquidWave() {
   }
   ctx.stroke();
 
-  // blob fill dưới
   ctx.beginPath();
   for (let i = 0; i <= segments; i++) {
     const x = (w / segments) * i;
@@ -532,8 +540,7 @@ function drawLiquidWave() {
   requestAnimationFrame(drawLiquidWave);
 }
 
-
-// ========== ANIMATION CHO SECTION MEMORIES KHI SCROLL LÊN/XUỐNG ==========
+// ========== MEMORIES SCROLL ==========
 
 function initMemoriesObserver() {
   const cards = document.querySelectorAll(".memory-card");
@@ -543,23 +550,74 @@ function initMemoriesObserver() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // THẤY TRONG VIEWPORT → HIỆN
           entry.target.classList.add("in-view");
         } else {
-          // RA KHỎI VIEWPORT → ẨN
           entry.target.classList.remove("in-view");
         }
       });
     },
-    {
-      threshold: 0.25, // card xuất hiện ~25% là bắt đầu hiện
-    }
+    { threshold: 0.25 }
   );
 
   cards.forEach((card) => observer.observe(card));
 }
 
+function setupMemoryStagger() {
+  const cards = document.querySelectorAll(".memory-card");
+  if (!cards.length) return;
+
+  cards.forEach((card, index) => {
+    const delay = index * 0.08;
+    card.style.setProperty("--stagger", `${delay}s`);
+  });
+}
+setupMemoryStagger();
 initMemoriesObserver();
 
+// =================== PLAYBACK RATE SLIDER (ĐÃ ĐÓNG NGOẶC ĐÚNG) ===================
 
+function updateRateGradient(value) {
+  const minVal = 75;
+  const maxVal = 125;
+  const percent = ((value - minVal) / (maxVal - minVal)) * 100;
+
+  const colorSlow = "#f4c8f0";
+  const colorFast = "#f4c8f0";
+
+  if (value <= 100) {
+    // chậm hơn 1.0x
+    rateSlider.style.background = `linear-gradient(90deg, ${colorSlow} 0%, ${colorSlow} ${percent}%, #daefff ${percent}%)`;
+  } else {
+    // nhanh hơn 1.0x
+    rateSlider.style.background = `linear-gradient(90deg, #e4fff3 0%, #daefff ${percent}%, ${colorFast} ${percent}%, ${colorFast} 100%)`;
+  }
+}
+
+function initRate() {
+  const initialValue = 100;
+  audio.playbackRate = initialValue / 100;
+  rateSlider.value = initialValue;
+  currentRateEl.textContent = `${(initialValue / 100).toFixed(2)}x`;
+  updateRateGradient(initialValue);
+}
+
+rateSlider.addEventListener("input", () => {
+  const value = Number(rateSlider.value);
+  const rate = value / 100;
+
+  audio.playbackRate = rate;
+  currentRateEl.textContent = `${rate.toFixed(2)}x`;
+  updateRateGradient(value);
+
+  if (!audio.paused && audioCtx && audioCtx.state === "running") {
+    // không bắt buộc làm gì thêm ở đây
+  }
+});
+
+initRate();
+
+// Gọi waveform loop
 drawLiquidWave();
+
+
+

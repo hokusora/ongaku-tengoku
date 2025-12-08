@@ -3,22 +3,37 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family:"OreliaDisplay", system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+  font-family:"Orelia", system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
     "Segoe UI", sans-serif;   
 }
 @font-face {
-  font-family: "OreliaDisplay";
-  src: url("./fonts/SVN-OreliaDisplay.otf");
-  format("opentype");
+  font-family: "Orelia";
+  src: url("./fonts/SVN-OreliaDisplay.otf")format("opentype");
 
 }
 @font-face {
-  font-family: "SVN-TheFolacie";
-  src: url("./fonts/SVN-TheFolacie.otf");
+  font-family: "yeliSKA";
+  src: url("./fonts/YeliskaDasmithe.otf");
+  format("opentype"); 
+}
+@font-face {
+  font-family: "Folacie";
+  src: url("./fonts/TheFolacie.otf");
   format("opentype");
 }
 @font-face {
-  font-family: "SVN-Azuka";
+  font-family: "Heart"; 
+  src: url("./fonts/heartshapedchocolate.otf");
+  format("opentype");
+}
+@font-face { 
+  font-family: "Linkgray";
+  src: url("./fonts/LINKGRAY.otf");
+  format("opentype");
+}
+  
+@font-face {
+  font-family: "Azuka";
   src: url("./fonts/SVN-Azuka.otf") 
   format("opentype");
   font-weight: 400;
@@ -26,7 +41,7 @@
   font-display: swap;
 }
 @font-face {
-  font-family: "SVN-Hoshita";
+  font-family: "Hoshita";
   src: url("./fonts/SVN-Hoshita.otf") 
   format("opentype");
   font-weight: 400;
@@ -34,56 +49,111 @@
   font-display: swap;
 }
 
+/* ===== Player Title - Gradient chuyển động pastel ===== */
+
+/* ===== Player Title - Gradient chuyển động + outline pastel + shimmer ===== */
 .player-header h1 {
-  font-family: "OreliaDisplay", sans-serif;
-  font-size: 1.3rem;
-  font-weight: 400; /* tùy font */
-  background: linear-gradient(120deg, #ff74b2, #95ff7b);
+  font-family: "Orelia", sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+
+  /* Gradient pastel hồng → cam → kem → hồng */
+  background: linear-gradient(
+    120deg,
+    #ff9ecd,
+    #ffb38b,
+    #ffd9b5,
+    #ffc6d8,
+    #ff9ecd
+  );
+  background-size: 320% 320%;
+  animation: titleGradientMove 9s ease-in-out infinite;
+
   -webkit-background-clip: text;
-  color: rgb(201, 255, 255);
+  color: transparent;
+
+  /* Cho phép shimmer phủ lên */
+  position: relative;
+  display: inline-block;
+
+  /* Outline pastel rất nhẹ */
+  -webkit-text-stroke: 0.5px rgba(255, 240, 246, 0.9);
+  text-shadow:
+    0 0 5px rgba(255, 210, 230, 0.45),
+    0 0 10px rgba(255, 200, 210, 0.3);
 }
 
+
+/* Gradient nền di chuyển chậm, dịu */
+@keyframes titleGradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Shimmer chạy qua chữ, nhẹ nhàng không chói */
+
+
+
 .player-subtitle {
-  font-family: "SVN-TheFolacie", system-ui, sans-serif;
-  color:2317FF;
+  font-family: "Folacie", system-ui, sans-serif;
+  color:#2317FF;
 }
 .track-title {
-  font-family: "SVN-TheFolacie", sans-serif;
-  font-size: 1rem;
+  font-family: "linkgray", sans-serif;
+  font-size: 1.25rem;
   font-weight: 600;
-  color: khaki;
+  color: #fbc2eb;
 }
 
 .track-artist {
-  font-family: "SVN-TheFolacie", system-ui, sans-serif;
-  font-size: 1.5rem;
-  color:#FFC2FE;
+  font-family: "linkgray", system-ui, sans-serif;
+  font-size: 3.5rem;
+  color:#ffd9d9;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
 }
 
 
 .playlist-title {
-  font-family: "SVN-Hoshita", system-ui, sans-serif;
+  font-family: "Heart", system-ui, sans-serif;
   font-weight: 1000;
 }
 
 .playlist-artist {
-  font-family: "SVN-TheFolacie", monospace;
+  font-family: "Folacie", monospace;
 }
 
 
 
 /* BACKGROUND LIQUID GRADIENT ĐỘNG */
 
+/* --- TÌM VÀ THAY THẾ ĐOẠN BODY CŨ BẰNG ĐOẠN NÀY --- */
+
 body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* KHÔNG dùng align-items: center nữa */
-
-  padding: 32px 16px 40px;
+  align-items: flex-start;
+  /* Xóa padding ở đây để tránh lệch layout khi dùng ::before */
   position: relative;
-  overflow-x: hidden;
+  /* Quan trọng: KHÔNG đặt animation hay filter trực tiếp lên body */
+}
 
+/* Tạo lớp nền giả lập để chạy hiệu ứng mà không ảnh hưởng Popup */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1; /* Nằm dưới cùng */
+  
+  /* Copy lại background và animation cũ vào đây */
   background:
     linear-gradient(
       120deg,
@@ -91,10 +161,15 @@ body {
       rgba(255, 240, 250, 0.8),
       rgba(255, 230, 220, 0.8)
     ),
-    url("yuyu8.jpg") center/cover no-repeat;
-
+    url("pics/yuyu8.jpg") center/cover no-repeat;
+  
   background-blend-mode: overlay;
   animation: bgLiquid 22s ease-in-out infinite alternate;
+}
+
+/* Thêm padding cho nội dung chính (thay cho padding body cũ) */
+.page {
+  padding: 32px 16px 40px; /* Chuyển padding từ body sang đây */
 }
 
 /* LƯU Ý: .page PHẢI Ở NGOÀI body {} CHỨ KHÔNG NẰM TRONG */
@@ -283,28 +358,11 @@ body {
 .track-title {
   display: inline-block;
   white-space: nowrap;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #FFAEE1;
-  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* marquee khi đang play */
-.track-title.scrolling {
-  animation: title-scroll 9s linear infinite;
-}
 
-@keyframes title-scroll {
-  0% {
-    transform: translateX(0);
-  }
-  10% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
-}
+
+
 
 .track-artist {
   font-size: 0.85rem;
@@ -673,10 +731,17 @@ body {
   }
 }
 
-/* CARD CƠ BẢN */
+.memory-note-img {
+  width: 100%;       /* Ảnh rộng theo cột chứa nó */
+  height: auto;      /* Chiều cao tự tính theo tỉ lệ ảnh -> Không bị méo/cắt */
+  display: block;    /* Xóa khoảng trắng thừa dưới chân ảnh */
+  border-radius: 8px; /* Bo góc cho đẹp (tùy chọn) */
+}
+
+
 /* CARD CƠ BẢN */
 .memory-card {
-  background: rgba(200, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 20px;
   box-shadow: 0 10px 24px rgba(177, 131, 170, 0.25);
   padding: 10px 10px 12px;
@@ -684,38 +749,23 @@ body {
   flex-direction: column;
   gap: 6px;
 
-  /* ẨN BAN ĐẦU + ĐẨY XUỐNG */
+  /* Ẩn ban đầu + đẩy xuống */
   opacity: 0;
   transform: translateY(40px);
 
-  /* MỀM MẠI KHI HIỆN / ẨN */
+  /* mượt khi hiện / ẩn */
   transition:
     opacity 0.55s ease-out,
     transform 0.55s ease-out;
+
+  /* delay cho từng card – sẽ được set bằng JS */
+  transition-delay: var(--stagger, 0s);
 }
 
-/* KHI Ở TRONG VIEWPORT → HIỆN LÊN */
+/* Khi ở trong viewport → hiện lên */
 .memory-card.in-view {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* STAGGER: TRÁI TRƯỚC, PHẢI SAU */
-.memory-left.in-view {
-  transition-delay: 0s;
-}
-
-.memory-right.in-view {
-  transition-delay: 0.12s;
-}
-
-/* HÀNG DƯỚI TRỄ HƠN CHÚT */
-.memories-grid .memory-card:nth-child(3).in-view {
-  transition-delay: 0.18s;
-}
-
-.memories-grid .memory-card:nth-child(4).in-view {
-  transition-delay: 0.28s;
 }
 
 
@@ -728,8 +778,7 @@ body {
 .memory-image {
   display: block;
   width: 100%;
-  height: 140px;
-  object-fit: cover;
+  
   transform: scale(1.02);
   transition: transform 0.3s ease;
 }
@@ -750,3 +799,421 @@ body {
 
 /* KHI ĐƯỢC JS THÊM CLASS .in-view */
 
+/* ========== PLAYBACK RATE ========== */
+
+.rate-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: #9fb8a8;
+  margin-top: 4px; /* Thêm một chút khoảng cách */
+}
+
+.rate-label {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(200, 250, 200, 0.5); /* Màu nền riêng cho Tốc độ */
+  color: #8c738c;
+}
+
+#rate-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  /* Mặc định ở giữa (1.0x) */
+  background: linear-gradient(90deg, #b4f3cf 50%, #e4fff3 50%);
+  outline: none;
+  cursor: pointer;
+}
+
+/* thumb (núm kéo) */
+#rate-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ffc2fe;
+  box-shadow: 0 0 0 3px rgba(220, 159, 218, 0.7); /* Màu shadow riêng */
+}
+
+/* thumb firefox */
+#rate-slider::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: none;
+  box-shadow: 0 0 0 3px rgba(220, 159, 218, 0.7);
+}
+
+/* track firefox */
+#rate-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: transparent;
+}
+
+/* Đổi màu artist khi bài đang phát */
+.player.playing .track-artist {
+  background: linear-gradient(120deg, #ff74b2, #a78bfa, #7fd8ff);
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: artistGlow 3s infinite ease-in-out;
+}
+
+@keyframes artistGlow {
+  0%   { filter: drop-shadow(0 0 4px #ffacec); }
+  50%  { filter: drop-shadow(0 0 10px #c6b1ff); }
+  100% { filter: drop-shadow(0 0 4px #ffacec); }
+}
+
+/* ===== Track Title khi bài đang phát ===== */
+.player.playing .track-title {
+  background: linear-gradient(
+    120deg,
+    #ff9ecd,
+    #ffb38b,
+    #ffd4a3
+  );
+  -webkit-background-clip: text;
+  color: #e4fff3;
+  animation: titleGlow 4s ease-in-out infinite;
+  text-shadow: 0 0 6px rgba(255, 182, 205, 0.35);
+}
+
+@keyframes titleGlow {
+  0% {
+    text-shadow: 0 0 6px rgba(255, 182, 205, 0.35);
+  }
+  50% {
+    text-shadow: 0 0 12px rgba(255, 199, 184, 0.45);
+  }
+  100% {
+    text-shadow: 0 0 6px rgba(255, 182, 205, 0.35);
+  }
+}
+
+/* --- THÊM VÀO CUỐI FILE DESIGN.CSS --- */
+/* --- CẬP NHẬT GIAO DIỆN MEMORY (Dán vào cuối file design.css) --- */
+
+/* 1. Lưới chia cột */
+.memories-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 cột */
+  gap: 20px; /* Khoảng cách giữa các ô */
+  align-items: start; /* Căn hàng đầu bằng nhau */
+}
+
+/* 2. Khung Card (Chứa ảnh + Chữ) */
+.memory-card {
+  background: rgba(255, 255, 255, 0.9); /* Nền trắng mờ */
+  padding: 10px;      /* Khoảng cách viền */
+  border-radius: 16px; /* Bo tròn khung */
+  /* 2. Khung Card (Chứa ảnh + Chữ) - ĐÃ ĐỔI MÀU NỀN */
+
+  /* BACKGROUND MỚI: Gradient Hồng Cam Pastel trong suốt */
+  background: linear-gradient(
+    145deg,
+    rgba(255, 204, 230, 0.85), /* Hồng Pastel nhẹ */
+    rgba(255, 230, 204, 0.9)    /* Cam/Kem Pastel nhẹ */
+  ); 
+  
+  backdrop-filter: blur(5px); /* Tăng hiệu ứng mờ nền nhẹ */
+  
+  
+  box-shadow: 0 10px 24px rgba(177, 131, 170, 0.2); /* Đổ bóng nhẹ */
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Khoảng cách giữa ảnh và chữ */
+  transition: transform 0.3s ease;
+}
+
+/* Hiệu ứng khi di chuột vào card */
+.memory-card:hover {
+  transform: translateY(-5px);
+}
+
+/* 3. Ảnh hiển thị full tỉ lệ 3:4 */
+.full-mem-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3/4;   /* QUAN TRỌNG: Giữ tỉ lệ dọc 3:4 */
+  object-fit: cover;   /* Ảnh lấp đầy khung mà không bị méo */
+  border-radius: 12px; /* Bo tròn góc ảnh */
+  display: block;
+}
+
+/* 4. Dòng Note bên dưới */
+.memory-note {
+  font-size: 0.9rem;
+  color: #7a5c7a; /* Màu chữ tím nhạt cho hợp theme */
+  text-align: center;
+  margin-bottom: 4px;
+  font-family: "Yeliska", sans-serif; /* Font chữ viết tay nếu có */
+  line-height: 1.4;
+}
+
+/* Mobile: Chuyển về 1 cột */
+@media (max-width: 640px) {
+  .memories-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.embed-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+  /* ====== GALLERY ====== */
+  .video-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 cột mobile */
+    gap: 16px;
+  }
+
+  @media (min-width: 992px) {
+    .video-gallery {
+      grid-template-columns: repeat(4, 1fr); /* 4 cột desktop */
+    }
+  }
+
+  .video-block {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .thumb-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    overflow: hidden;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(255, 170, 200, 0.35);
+    background: linear-gradient(135deg, #ffe4f0, #ffd1b3);
+  }
+
+  .thumb-wrapper img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    left: 0;
+    top: 0;
+    display: block;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  .thumb-wrapper:hover img {
+    transform: scale(1.05);
+    opacity: 0.92;
+  }
+
+  /* Nút play ở giữa thumbnail */
+  .thumb-play-icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .thumb-play-icon::before {
+    content: "";
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+  }
+
+  .thumb-play-icon::after {
+    content: "";
+    position: absolute;
+    margin-left: 3px;
+    border-style: solid;
+    border-width: 10px 0 10px 18px;
+    border-color: transparent transparent transparent #ff6f91;
+  }
+
+  .video-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 8px;
+    color: #ff6f91;
+  }
+
+  .video-desc {
+    font-size: 13px;
+    margin-top: 4px;
+    color: #555;
+  }
+
+  /* ====== POPUP / MODAL ====== */
+  .video-modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .video-modal.active {
+    display: flex;
+  }
+
+  .video-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 0, 30, 0.65);
+    backdrop-filter: blur(6px);
+  }
+
+  .video-modal__content {
+    position: relative;
+    max-width: 1200px;
+    width: 92%;
+    background: linear-gradient(135deg, #ffe4f0, #ffd1b3, #fff5d9);
+    border-radius: 24px;
+    padding: 48px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+    z-index: 1;
+  }
+/* --- THÊM CÁC STYLE NÀY VÀO PHẦN POPUP / MODAL TRONG design.css --- */
+
+/* 1. KHUNG BỌC VÀ TẠO VIỀN GRADIENT HỒNG CAM */
+.video-info-wrapper {
+  /* Copy lại gradient pastel làm nền */
+  background: linear-gradient(135deg, #ffe4f0, #ffd1b3, #fff5d9); 
+  border-radius: 18px; 
+  padding: 10px; /* Độ dày của viền gradient */
+  margin-bottom: 20px; /* Khoảng cách với khung video (iframe) */
+  /* THÊM DÒNG NÀY ĐỂ ĐẢM BẢO CÁC PHẦN TỬ CON NẰM TRÊN MỘT KHỐI RIÊNG */
+  display: block;
+}
+
+/* 2. KHUNG NỘI DUNG MÀU TRẮNG BÊN TRONG (Tạo hiệu ứng viền nổi) */
+/* --- POPUP STYLE FIX --- */
+
+/* 1. Khung bọc Tiêu đề & Mô tả (Viền Gradient) */
+.video-info-wrapper {
+  background: linear-gradient(135deg, #ffe4f0, #ffd1b3, #fff5d9); 
+  border-radius: 18px; 
+  padding: 10px; 
+  margin-bottom: 24px; /* Tăng khoảng cách với video bên dưới */
+  display: block;      /* Bắt buộc phải có */
+}
+
+/* 2. Style chung cho Tiêu đề & Mô tả bên trong */
+.video-info-wrapper #modal-title,
+.video-info-wrapper #modal-description {
+  background-color: white; 
+  border-radius: 12px; 
+  padding: 16px 20px; 
+  margin: 0; 
+  display: block;      /* Bắt buộc phải có để không bị dính dòng */
+}
+
+/* 3. Tinh chỉnh riêng Tiêu đề */
+.modal-title {
+  font-family: 'Folacie', sans-serif;
+  font-size: 2rem; 
+  color: #ff88a0; 
+  margin-bottom: 8px !important; /* Đẩy mô tả xuống một chút */
+}
+
+/* 4. Tinh chỉnh riêng Mô tả */
+.modal-description {
+  font-family: 'Azuka', sans-serif;
+  font-size: 1rem; 
+  color: #666;
+}
+  .video-modal__frame-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 18px;
+  }
+
+  .video-modal__frame-wrapper iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .video-modal__close {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    border: none;
+    background: rgba(255, 255, 255, 0.85);
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    color: #ff6f91;
+    box-shadow: 0 4px 12px rgba(255, 120, 160, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-modal__close:hover {
+    background: #fff;
+    transform: translateY(-1px);
+  }
+/* =================== STYLE CHO VIDEO YOUTUBE Ở ĐẦU TRANG =================== */
+
+.youtube-frame-wrapper {
+  /* Giữ nguyên phần này */
+  background: linear-gradient(135deg, #fceabb 0%, #f8b5a7 50%, #f4c8f0 100%);
+  padding: 4px; /* ĐỘ DÀY VIỀN: 4px */
+  border-radius: 20px;
+  margin-bottom: 25px; 
+  
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; 
+  height: 0;
+  overflow: hidden; 
+}
+
+.youtube-frame-wrapper iframe {
+  /* PHẦN CẦN THAY THẾ để tạo khoảng hở cho gradient */
+  position: absolute;
+  
+  /* Đẩy video vào trong 4px (bằng độ dày viền) */
+  top: 20px;
+  left: 20px;
+  
+  /* Giảm kích thước video (100% - 2 * 4px = 100% - 8px) */
+  width: calc(100% - 40px); 
+  height: calc(100% - 40px); 
+  
+  border: none;
+  border-radius: 26px; 
+}

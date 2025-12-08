@@ -2,14 +2,29 @@
 <html lang="vi">
   <head>
     <meta charset="UTF-8" />
-    <title> Hokusora no Ongaku no Tengoku</title>
+    <title>Dreamy Music Player</title>
     <link rel="stylesheet" href="design.css" />
   </head>
 
 <body>
+  
 
   <!-- WRAPPER TẤT CẢ NỘI DUNG -->
   <div class="page">
+    
+   <div class="youtube-frame-wrapper">
+  <iframe src="https://www.youtube.com/embed/DKQ3KIR3Tfg"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+  </iframe>
+</div>
+
+<div class="youtube-frame-wrapper">
+  <iframe src="https://www.youtube.com/embed/Xa11tFNGS48"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+  </iframe>
+</div>
 
     <!-- PLAYER FULL -->
     <div class="player">
@@ -25,7 +40,7 @@
           <div class="cover-inner">
             <img
               id="cover"
-              src="https://via.placeholder.com/250x250.png?text=Cover"
+              src="https://via.placeholder.com/250x250.png?text=Dhna"
               alt="cover"
             />
           </div>
@@ -50,6 +65,18 @@
         <div class="volume-row">
           <span class="volume-label">Vol</span>
           <input type="range" id="volume" min="0" max="100" value="80" />
+        </div>
+        
+         <div class="rate-row">
+          <span class="rate-label">Tốc độ</span>
+          <input
+            type="range"
+            id="rate-slider"
+            min="75"
+            max="125"
+            value="100"
+          />
+          <span id="current-rate">1.00x</span>
         </div>
 
         <!-- CONTROLS -->
@@ -82,62 +109,186 @@
 
 
     <!-- SECTION MEMORIES — xuất hiện khi scroll xuống -->
-    <section class="memories">
-      <div class="memories-inner">
-        <h2 class="memories-title">Những khoảnh khắc chill</h2>
+        <section class="memories">
+  <div class="memories-inner">
+    <h2 class="memories-title">Những khoảnh khắc chill</h2>
 
-        <div class="memories-grid">
+    <div class="memories-grid">
 
-          <!-- Card 1 -->
-          <div class="memory-card memory-left">
-            <div class="memory-image-wrap">
-              <img src="yuyu3.jpg" alt="Chill 1" class="memory-image" />
-            </div>
-            <p class="memory-note">
-              Đêm mưa, nhạc nhỏ, ánh đèn vàng bên cửa sổ
-            </p>
-          </div>
+      <div class="memory-card">
+        <img src="pics/yuyu3.jpg" alt="Chill 1" class="full-mem-img" />
+        <p class="memory-note">
+          Đêm mưa, nhạc nhỏ, ánh đèn vàng bên cửa sổ.
+        </p>
+      </div>
 
-          <!-- Card 2 -->
-          <div class="memory-card memory-right">
-            <div class="memory-image-wrap">
-              <img src="yuyu4.jpg" alt="Chill 2" class="memory-image" />
-            </div>
-            <p class="memory-note">
-              Chiều muộn, ly matcha, playlist lofi quen thuộc.
-            </p>
-          </div>
+      <div class="memory-card">
+        <img src="pics/yuyu8.jpg" alt="Chill 2" class="full-mem-img" />
+        <p class="memory-note">
+          Chiều muộn, ly matcha, playlist lofi quen thuộc.
+        </p>
+      </div>
 
-          <!-- Card 3 -->
-          <div class="memory-card memory-left">
-            <div class="memory-image-wrap">
-              <img src="yuyu5.jpg" alt="Chill 3" class="memory-image" />
-            </div>
-            <p class="memory-note">
-              Đêm trắng ôn bài nhưng tâm trạng vẫn thật êm.
-            </p>
-          </div>
+      <div class="memory-card">
+        <img src="pics/dnha11.jpg" alt="Chill 3" class="full-mem-img" />
+        <p class="memory-note">
+          Đêm trắng ôn bài nhưng tâm trạng vẫn thật êm.
+        </p>
+      </div>
 
-          <!-- Card 4 -->
-          <div class="memory-card memory-right">
-            <div class="memory-image-wrap">
-              <img src="yuyu6.jpg" alt="Chill 4" class="memory-image" />
-            </div>
-            <p class="memory-note">
-              Một ngày lười, chỉ muốn nằm nghe nhạc và thả hồn.
-            </p>
-          </div>
+      <div class="memory-card">
+        <img src="pics/dnha14.jpg" alt="Chill 4" class="full-mem-img" />
+        <p class="memory-note">
+          Một ngày lười, chỉ muốn nằm nghe nhạc và thả hồn.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+   
+
+
+<!-- GALLERY -->
+
+<div class="video-gallery">
+
+  <div class="video-block" data-video-id="hn1kl5iPgfY"
+       data-title="On Rainy Days - Heize" 
+       data-description="Giai điệu ùa về nơi mỗi cơn mưa">
+       
+      <div class="thumb-wrapper">
+        <img src="https://img.youtube.com/vi/hn1kl5iPgfY/hqdefault.jpg" alt="Video 1">
+        <div class="thumb-play-icon"></div>
+      </div>
+      <div class="video-title">On Rainy Days Heize</div>
+      <div class="video-desc">Giai điệu ùa về nơi mỗi cơn mưa</div>
+  </div> <div class="video-block" data-video-id="CJpjV5xB5r4"
+       data-title="Ocean - NMIXX" 
+       data-description="Viên Ngọc Quý Hiếm của Kpop">
+       
+      <div class="thumb-wrapper">
+        <img src="https://img.youtube.com/vi/CJpjV5xB5r4/hqdefault.jpg" alt="Video 2">
+        <div class="thumb-play-icon"></div>
+      </div>
+      <div class="video-title">Soda 35* gặp phải Đá 0*</div>
+      <div class="video-desc">Một chút ngọt ngào </div>
+  </div>
+
+  <div class="video-block" data-video-id="v-q3IiKYmLg"
+       data-title="Drop Top - MEOVV" 
+       data-description="Năng Lượng Đột Phá">
+       
+      <div class="thumb-wrapper">
+        <img src="https://img.youtube.com/vi/v-q3IiKYmLg/hqdefault.jpg" alt="Video 3">
+        <div class="thumb-play-icon"></div>
+      </div>
+      <div class="video-title">Drop Top MEOVV</div>
+      <div class="video-desc">Năng Lượng Đột Phá</div>
+  </div>
+
+  <div class="video-block" data-video-id="1LUIGBM5ytg"
+       data-title="Orange 7!" 
+       data-description="Lí do đưa tôi đến thế giới tiếng nhật">
+       
+      <div class="thumb-wrapper">
+        <img src="https://img.youtube.com/vi/1LUIGBM5ytg/hqdefault.jpg" alt="Video 4">
+        <div class="thumb-play-icon"></div>
+      </div>
+      <div class="video-title">Orange 7!</div>
+      <div class="video-desc">Lí do đưa tôi đến thế giới tiếng nhật</div>
+  </div>
+
+</div>
+<!-- POPUP / MODAL -->
+<div id="video-modal" class="video-modal">
+  <div class="video-modal__overlay"></div>
+  <div class="video-modal__content">
+    <button class="video-modal__close" aria-label="Đóng">&times;</button>
+    <div class="video-info-wrapper">
+            <h3 id="modal-title" class="modal-title"></h3>
+            <p id="modal-description" class="modal-description"></p>
 
         </div>
-      </div>
-    </section>
+    <div class="video-modal__frame-wrapper">
+      <iframe
+        id="modal-iframe"
+        src=""
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>
 
-  </div> <!-- END .page -->
+    </div> <audio id="audio"></ audio> 
+    <script src="playernew.js"></script>
 
+    <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const videoBlocks = document.querySelectorAll('.video-block');
+    const modal = document.getElementById('video-modal');
+    const modalIframe = document.getElementById('modal-iframe');
+    const modalCloseBtn = document.querySelector('.video-modal__close');
+    const modalOverlay = document.querySelector('.video-modal__overlay');
+    
+    // 1. PHẢI LẤY CÁC PHẦN TỬ MỚI VỚI ID:
+    const modalTitle = document.getElementById('modal-title');
+    const modalDescription = document.getElementById('modal-description');
+    
+    // Nếu thiếu các phần tử, script sẽ dừng (an toàn)
+    if (!videoBlocks.length || !modal || !modalIframe || !modalTitle || !modalDescription) return;
 
-  <!-- AUDIO + SCRIPT -->
-  <audio id="audio"></audio>
-  <script src="player.js"></script>
+    // 2. SỬA LỖI QUAN TRỌNG: Định nghĩa hàm phải có đủ 3 tham số
+    function openModal(videoId, title, description) { 
+      const src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      modalIframe.src = src;
+      
+      // Gán dữ liệu vào khung mới
+      modalTitle.textContent = (title || 'Tiêu đề video').trim(); 
+      modalDescription.textContent = (description || 'Mô tả không có sẵn.').trim();
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      modalIframe.src = '';
+      document.body.style.overflow = '';
+      
+      // Tùy chọn: Xóa nội dung khi đóng để tránh bị nhấp nháy
+      modalTitle.textContent = '';
+      modalDescription.textContent = '';
+    }
+
+    videoBlocks.forEach(block => {
+      const thumb = block.querySelector('.thumb-wrapper');
+      const videoId = block.getAttribute('data-video-id');
+      
+      // Lấy dữ liệu title và description từ thẻ video-block
+      const videoTitle = block.getAttribute('data-title');
+      const videoDescription = block.getAttribute('data-description');
+      
+      if (!thumb || !videoId) return;
+
+      thumb.addEventListener('click', () => {
+        // Gọi hàm với đủ 3 tham số
+        openModal(videoId, videoTitle, videoDescription);
+      });
+    });
+
+    modalCloseBtn?.addEventListener('click', closeModal);
+    modalOverlay?.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+  });
+</script>
 
 </body>
-</html>
+  </html>

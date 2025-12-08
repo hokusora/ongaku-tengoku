@@ -22,13 +22,13 @@
   format("opentype");
 }
 @font-face {
-  font-family: "Heart"; 
-  src: url("./fonts/heartshapedchocolate.otf");
+  font-family: "heart"; 
+  src: url("./fonts/HeartShapedChocolate.otf");
   format("opentype");
 }
 @font-face { 
-  font-family: "Linkgray";
-  src: url("./fonts/LINKGRAY.otf");
+  font-family: "linkgray";
+  src: url("./fonts/Linkgray.otf");
   format("opentype");
 }
   
@@ -106,14 +106,14 @@
   color:#2317FF;
 }
 .track-title {
-  font-family: "linkgray", sans-serif;
+  font-family: "heart", sans-serif;
   font-size: 1.25rem;
   font-weight: 600;
   color: #fbc2eb;
 }
 
 .track-artist {
-  font-family: "linkgray", system-ui, sans-serif;
+  font-family: "heart", system-ui, sans-serif;
   font-size: 3.5rem;
   color:#ffd9d9;
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -1216,4 +1216,120 @@ body::before {
   
   border: none;
   border-radius: 26px; 
+}
+
+/* =================== STYLE CHO WELCOME POP-UP (ĐÃ CẬP NHẬT) =================== */
+.welcome-modal {
+  /* Che phủ toàn bộ màn hình */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Lớp phủ mờ */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Đảm bảo nó nằm trên tất cả các phần tử khác */
+
+  /* Mặc định ẩn, sẽ được hiển thị bằng JS */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.welcome-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.welcome-modal__content {
+  /* Màu khung: giữ nguyên hồng cam đào pastel */
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+  
+  padding: 30px;
+  border-radius: 20px; /* Viền bo tròn */
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(255, 105, 135, 0.5);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.welcome-modal.active .welcome-modal__content {
+  transform: scale(1);
+}
+
+.welcome-modal__icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  color: #d15c7e; /* Màu cho icon */
+}
+
+.welcome-modal__icons svg {
+  width: 30px;
+  height: 30px;
+  /* Thêm hiệu ứng lắc nhẹ nếu muốn */
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+.welcome-modal__text {
+  font-family: "Azuka", sans-serif;
+  font-size: 1.1em;
+  color: #7d4452;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+/* Kiểu cho nhóm nút */
+.welcome-modal__actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px; /* Khoảng cách giữa hai nút */
+}
+
+/* Kiểu cho nút mới */
+.welcome-modal__btn {
+  /* Màu nền: Hồng tím galaxy gradient pastel */
+  background: linear-gradient(135deg, #FF69B4 0%, #8A2BE2 100%); /* Deep Pink to Blue Violet */
+  color: white; /* Chữ trắng để nổi bật trên nền đậm */
+  border: none;
+  padding: 10px 25px;
+  border-radius: 50px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(138, 43, 226, 0.4);
+}
+
+.welcome-modal__btn:hover {
+  background: linear-gradient(135deg, #FFB6C1 0%, #D8BFD8 100%); /* Đổi màu khi hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(138, 43, 226, 0.6);
+}
+/* Kiểu cho nhóm ảnh */
+.welcome-modal__images {
+  display: flex; /* Hiển thị ảnh cạnh nhau */
+  justify-content: center; /* Căn giữa nhóm ảnh, đảm bảo thẳng hàng */
+  gap: 20px; /* Khoảng cách giữa 2 ảnh */
+  /* Khoảng cách với dòng chữ bên dưới, giúp cân đối */
+  margin-bottom: 25px; 
+}
+
+/* Kiểu cho từng ảnh */
+.welcome-modal__img {
+  width: 120px; /* Điều chỉnh kích thước ảnh */
+  height: 120px; 
+  object-fit: cover; /* Đảm bảo ảnh không bị méo khi cắt */
+  border-radius: 10px; /* Bo góc nhẹ */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Thêm bóng */
 }

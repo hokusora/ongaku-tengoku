@@ -60,6 +60,14 @@ const tracks = [
      {title: "Trời Giấu Trời Mang Đi", artist: "AMEE", src: "music/troigiautroimangdi.mp3", cover: "pics/yuyu9.jpg"},
      { title: "Thật Quá Đáng Để Yêu", artist: "AMEE", src: "music/quadang.mp3", cover: "pics/dnha22.jpg"},
  {title: "Ngẩn Nger", artist: "puppy", src: "music/ngannger.mp3", cover: "pics/dnha1.jpg"},
+ {title: "Lucid Dream", artist: "aespa", src: "music/luciddream.mp3", cover: "pics/dnha24.jpg"},
+ {title: "Ex's Hate Me 2", artist: "AMEE", src: "music/exhateme.mp3", cover: "pics/dnha29.jpg"},
+ {title: "ItteKimasu", artist: "Soala", src: "music/kimasu.mp3", cover: "pics/dnha28.jpg"},
+ {title: "Lệ Lưu Ly", artist: "Vũ Tiên", src: "music/leluuly.mp3", cover: "pics/dnha33.jpg"},
+{title: "Trong Mắt Đều Là Anh", artist: "Tiểu Lam Bối Tâm", src: "music/tieulamboitam.mp3", cover: "pics/dnha35.jpg"},
+{title: "Đừng Để Nước Mắt Rơi", artist: "VSTRA", src: "music/nuocmat.mp3", cover: "pics/dnha38.jpg"},
+{title: "Think About You", artist: "Kay Chau Anh", src: "think.mp3", cover: "pics/dnha39.jpg"},
+ {title: "2 4", artist: "titie", src: "music/242.mp3", cover: "pics/dnha9.jpg"},
 ]
 let currentIndex = 0;
 let isSeeking = false;
@@ -620,4 +628,45 @@ initRate();
 drawLiquidWave();
 
 
+// =================== LOGIC CHO WELCOME POP-UP (ĐÃ CẬP NHẬT) ===================
+const welcomeModal = document.getElementById("welcome-modal");
+const closeWelcomeModalBtn = document.getElementById("close-welcome-modal");
+const linkWelcomeModalBtn = document.getElementById("link-welcome-modal"); // Nút "Đéo"
 
+function showWelcomeModal() {
+  // Chỉ hiện modal nếu người dùng chưa từng đóng nó (sử dụng localStorage)
+  //const isModalClosed = localStorage.getItem('welcomeModalClosed');
+  //if (!isModalClosed) {
+   welcomeModal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Ngăn cuộn trang nền
+  //}
+}
+
+function closeWelcomeModal() {
+  welcomeModal.classList.remove('active');
+  document.body.style.overflow = ''; // Cho phép cuộn trang lại
+  // Lưu trạng thái đã đóng vào localStorage để không hiện lại
+  //localStorage.setItem('welcomeModalClosed', 'true');
+}
+
+function handleLinkRedirect() {
+    // Chuyển hướng đến liên kết Instagram
+    window.location.href = 'https://www.instagram.com/_dnha.qwpi_/';
+    // Không cần đóng modal hoặc lưu localStorage vì người dùng đã chuyển trang
+}
+
+// Gắn sự kiện cho nút "Uki"
+closeWelcomeModalBtn?.addEventListener('click', closeWelcomeModal);
+
+// Gắn sự kiện cho nút "Đéo"
+linkWelcomeModalBtn?.addEventListener('click', handleLinkRedirect);
+
+// Hiển thị modal khi trang tải xong
+document.addEventListener('DOMContentLoaded', showWelcomeModal);
+
+// Tùy chọn: Thêm chức năng đóng khi click ra ngoài modal
+welcomeModal?.addEventListener('click', (e) => {
+    if (e.target === welcomeModal) {
+        closeWelcomeModal();
+    }
+});

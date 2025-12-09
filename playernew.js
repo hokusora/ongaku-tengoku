@@ -30,45 +30,166 @@ const canvas = document.getElementById("waveform");
 const ctx = canvas.getContext("2d");
 
 // =================== PLAYLIST ===================
-const tracks = [
-  { title: "Thuốc Tê", artist: "Siren", src: "thuoc-te.mp3", cover: "pics/yuyu.jpg" },
-  { title: "Day By Day", artist: "JOY", src: "day-by-day.mp3", cover: "pics/yuyu2.jpg" },
-  { title: "Vườn Sao Băng", artist: "puppy", src: "vuonsaobang.mp3", cover: "pics/yuyu3.jpg" },
-  { title: "The Way I Still Love You", artist: "Hattie", src: "The-Way.mp3", cover: "pics/yuyu4.jpg" },
-  { title: "Nếu Lúc Đó", artist: "tlinh", src: "neulucdo.mp3", cover: "pics/yuyu5.jpg" },
-  { title: "In The Rain", artist: "XG", src: "in-the-rain.mp3", cover: "pics/yuyu6.jpg" },
-  { title: "Lovesick Girls", artist: "BlackPink", src: "lovesick-girls.mp3", cover: "pics/yuyu7.jpg" },
-  { title: "Love My Friend", artist: "Shayda", src: "lovemyfriend.mp3", cover: "pics/yuyu8.jpg" },
+// const tracks = [
+//   { title: "Thuốc Tê", artist: "Siren", src: "thuoc-te.mp3", cover: "pics/yuyu.jpg" },
+//   { title: "Day By Day", artist: "JOY", src: "day-by-day.mp3", cover: "pics/yuyu2.jpg" },
+//   { title: "Vườn Sao Băng", artist: "puppy", src: "vuonsaobang.mp3", cover: "pics/yuyu3.jpg" },
+//   { title: "The Way I Still Love You", artist: "Hattie", src: "The-Way.mp3", cover: "pics/yuyu4.jpg" },
+//   { title: "Nếu Lúc Đó", artist: "tlinh", src: "neulucdo.mp3", cover: "pics/yuyu5.jpg" },
+//   { title: "In The Rain", artist: "XG", src: "in-the-rain.mp3", cover: "pics/yuyu6.jpg" },
+//   { title: "Lovesick Girls", artist: "BlackPink", src: "lovesick-girls.mp3", cover: "pics/yuyu7.jpg" },
+//   { title: "Love My Friend", artist: "Shayda", src: "lovemyfriend.mp3", cover: "pics/yuyu8.jpg" },
 
-  // 8 bài mới – ĐỔI LẠI THEO FILE CỦA BẠN
-  { title: "做自己的月亮",  artist: "小蓝背心",  src: "tieulamboitam.mp3",  cover: "pics/dnha2.jpg" },
-  { title: "3107-3", artist: "Umie", src: "31073.mp3", cover: "pics/dnha3.jpg"},
-  { title: "Anh Iu", artist: "Saabirose", src: "anh-iu.mp3", cover: "pics/dnha4.jpg" },
-  { title: "Lucid Dream", artist: "Aespa", src: "lucid-dream.mp3", cover: "pics/dnha6.jpg" },
-  { title: "On Rainy Days", artist: "HEIZE", src: "on-rainy-days.mp3", cover: "pics/dnha7.jpg" },
-  { title: "Chasing Lightning", artist: "Le Sserafim", src: "chasing-lightning.mp3", cover: "pics/dnha8.jpg" },
-  { title: "Wrong Times", artist: "puppy", src: "wrongtimes.mp3", cover: "pics/dnha16.jpg" },
-  { title: "Call Me On My Phone 2", artist: "puppy", src: "callme2.mp3", cover: "pics/dnha20.jpg" },
+//   // 8 bài mới – ĐỔI LẠI THEO FILE CỦA BẠN
+//   { title: "做自己的月亮",  artist: "小蓝背心",  src: "tieulamboitam.mp3",  cover: "pics/dnha2.jpg" },
+//   { title: "3107-3", artist: "Umie", src: "31073.mp3", cover: "pics/dnha3.jpg"},
+//   { title: "Anh Iu", artist: "Saabirose", src: "anh-iu.mp3", cover: "pics/dnha4.jpg" },
+//   { title: "Lucid Dream", artist: "Aespa", src: "lucid-dream.mp3", cover: "pics/dnha6.jpg" },
+//   { title: "On Rainy Days", artist: "HEIZE", src: "on-rainy-days.mp3", cover: "pics/dnha7.jpg" },
+//   { title: "Chasing Lightning", artist: "Le Sserafim", src: "chasing-lightning.mp3", cover: "pics/dnha8.jpg" },
+//   { title: "Wrong Times", artist: "puppy", src: "wrongtimes.mp3", cover: "pics/dnha16.jpg" },
+//   { title: "Call Me On My Phone 2", artist: "puppy", src: "callme2.mp3", cover: "pics/dnha20.jpg" },
 
-  { title: "Stairrway To Heaven", artist: "puppy", src: "music/stairwaytoheaven.mp3", cover: "pics/dnha17.jpg"},
-  {title: "Làm lành chữa tình", artist: "tlinh", src: "music/lamlanh.mp3", cover: "pics/dnha18.jpg"},
-  {title: "Bỏ Thuốc Vì Em Nhé", artist: "Kay Chau Anh", src: "music/bo-thuoc.mp3", cover: "pics/dnha13.jpg"},
-  {title: "Giấc Mơ", artist: "Catchellers", src: "music/giacmo.mp3", cover: "pics/dnha14.jpg"},
+//   { title: "Stairrway To Heaven", artist: "puppy", src: "music/stairwaytoheaven.mp3", cover: "pics/dnha17.jpg"},
+//   {title: "Làm lành chữa tình", artist: "tlinh", src: "music/lamlanh.mp3", cover: "pics/dnha18.jpg"},
+//   {title: "Bỏ Thuốc Vì Em Nhé", artist: "Kay Chau Anh", src: "music/bo-thuoc.mp3", cover: "pics/dnha13.jpg"},
+//   {title: "Giấc Mơ", artist: "Catchellers", src: "music/giacmo.mp3", cover: "pics/dnha14.jpg"},
       
-   {title: "Miền Mộng Mị", artist: "AMEE", src: "music/mienmongmi.mp3", cover: "pics/yuyu10.jpg"},
-   {title: "Hai Mươi Hai", artist: "AMEE", src: "music/haihai.mp3", cover: "pics/yuyu11.jpg"},
-     {title: "Trời Giấu Trời Mang Đi", artist: "AMEE", src: "music/troigiautroimangdi.mp3", cover: "pics/yuyu9.jpg"},
-     { title: "Thật Quá Đáng Để Yêu", artist: "AMEE", src: "music/quadang.mp3", cover: "pics/dnha22.jpg"},
- {title: "Ngẩn Nger", artist: "puppy", src: "music/ngannger.mp3", cover: "pics/dnha1.jpg"},
- {title: "Lucid Dream", artist: "aespa", src: "music/luciddream.mp3", cover: "pics/dnha24.jpg"},
- {title: "Ex's Hate Me 2", artist: "AMEE", src: "music/exhateme.mp3", cover: "pics/dnha29.jpg"},
- {title: "ItteKimasu", artist: "Soala", src: "music/kimasu.mp3", cover: "pics/dnha28.jpg"},
- {title: "Lệ Lưu Ly", artist: "Vũ Tiên", src: "music/leluuly.mp3", cover: "pics/dnha33.jpg"},
-{title: "Trong Mắt Đều Là Anh", artist: "Tiểu Lam Bối Tâm", src: "music/tieulamboitam.mp3", cover: "pics/dnha35.jpg"},
-{title: "Đừng Để Nước Mắt Rơi", artist: "VSTRA", src: "music/nuocmat.mp3", cover: "pics/dnha38.jpg"},
-{title: "Think About You", artist: "Kay Chau Anh", src: "think.mp3", cover: "pics/dnha39.jpg"},
- {title: "2 4", artist: "titie", src: "music/242.mp3", cover: "pics/dnha9.jpg"},
-]
+//    {title: "Miền Mộng Mị", artist: "AMEE", src: "music/mienmongmi.mp3", cover: "pics/yuyu10.jpg"},
+//    {title: "Hai Mươi Hai", artist: "AMEE", src: "music/haihai.mp3", cover: "pics/yuyu11.jpg"},
+//      {title: "Trời Giấu Trời Mang Đi", artist: "AMEE", src: "music/troigiautroimangdi.mp3", cover: "pics/yuyu9.jpg"},
+//      { title: "Thật Quá Đáng Để Yêu", artist: "AMEE", src: "music/quadang.mp3", cover: "pics/dnha22.jpg"},
+//  {title: "Ngẩn Nger", artist: "puppy", src: "music/ngannger.mp3", cover: "pics/dnha1.jpg"},
+//  {title: "Lucid Dream", artist: "aespa", src: "music/luciddream.mp3", cover: "pics/dnha24.jpg"},
+//  {title: "Ex's Hate Me 2", artist: "AMEE", src: "music/exhateme.mp3", cover: "pics/dnha29.jpg"},
+//  {title: "ItteKimasu", artist: "Soala", src: "music/kimasu.mp3", cover: "pics/dnha28.jpg"},
+//  {title: "Lệ Lưu Ly", artist: "Vũ Tiên", src: "music/leluuly.mp3", cover: "pics/dnha33.jpg"},
+// {title: "Trong Mắt Đều Là Anh", artist: "Tiểu Lam Bối Tâm", src: "music/trongmat.mp3", cover: "pics/dnha35.jpg"},
+// {title: "Đừng Để Nước Mắt Rơi", artist: "VSTRA", src: "music/vi.mp3", cover: "pics/dnha38.jpg"},
+// {title: "Think About You", artist: "Kay Chau Anh", src: "music/think.mp3", cover: "pics/dnha39.jpg"},
+//  {title: "2 4", artist: "titie", src: "music/242.mp3", cover: "pics/dnha9.jpg"},
+// ]
+
+// =================== DANH SÁCH 3 PLAYLIST ===================
+// Bạn copy danh sách bài cũ vào mảng tracks của "Danh Sách 1"
+// Các danh sách 2 và 3 để trống hoặc thêm bài mẫu
+const allPlaylists = [
+  {
+    name: "R&B",
+    tracks: [
+      
+     
+      { title: "Vườn Sao Băng", artist: "puppy", src: "vuonsaobang.mp3", cover: "pics/yuyu3.jpg" },
+      
+      { title: "Nếu Lúc Đó", artist: "tlinh", src: "neulucdo.mp3", cover: "pics/yuyu5.jpg" },
+      { title: "In The Rain", artist: "XG", src: "in-the-rain.mp3", cover: "pics/yuyu6.jpg" },
+      
+      { title: "Love My Friend", artist: "Shayda", src: "lovemyfriend.mp3", cover: "pics/yuyu8.jpg" },
+     
+     
+      { title: "Anh Iu", artist: "Saabirose", src: "anh-iu.mp3", cover: "pics/dnha4.jpg" },
+      
+      {title: "Where You Are", artist: "NINGNING", src: "music/ningning.mp3", cover: "pics/yuki/yuki12.jpg"},
+      
+      
+      { title: "Wrong Times", artist: "puppy", src: "wrongtimes.mp3", cover: "pics/dnha16.jpg" },
+      { title: "Call Me On My Phone 2", artist: "puppy", src: "callme2.mp3", cover: "pics/dnha20.jpg" },
+      { title: "Stairway To Heaven", artist: "puppy", src: "music/stairwaytoheaven.mp3", cover: "pics/dnha17.jpg"},
+      {title: "Làm lành chữa tình", artist: "tlinh", src: "music/lamlanh.mp3", cover: "pics/dnha18.jpg"},
+      
+      
+       
+      
+      {title: "Ngẩn Nger", artist: "puppy", src: "music/ngannger.mp3", cover: "pics/dnha1.jpg"},
+     
+     
+      {title: "Lệ Lưu Ly", artist: "Vũ Tiên", src: "music/leluuly.mp3", cover: "pics/dnha33.jpg"},
+      
+      {title: "Đừng Để Nước Mắt Rơi", artist: "VSTRA", src: "music/vi.mp3", cover: "pics/dnha38.jpg"},
+       {title: "FEVER", artist: "tlinh", src: "music/fever.mp3", cover: "pics/yuki/yuki8.jpg"},
+       {title: "TOXIC", artist: "MEOVV", src: "music/toxic.mp3", cover: "pics/yuki/yuki20.jpg"},
+      
+      
+    ]
+  },
+  {
+    name: "Dreamy Vibes",
+    tracks: [
+       // Bạn tự thêm bài hát cho Playlist 2 vào đây sau
+       {title: "Trời Giấu Trời Mang Đi", artist: "AMEE", src: "music/troigiautroimangdi.mp3", cover: "pics/yuyu9.jpg"},
+       {title: "Hai Mươi Hai", artist: "AMEE", src: "music/haihai.mp3", cover: "pics/yuyu11.jpg"},
+       
+       {title: "Giấc Mơ", artist: "Catchellers", src: "music/giacmo.mp3", cover: "pics/dnha14.jpg"},
+       {title: "Trong Mắt Đều Là Anh", artist: "Tiểu Lam Bối Tâm", src: "music/trongmat.mp3", cover: "pics/dnha35.jpg"},
+       { title: "Thật Quá Đáng Để Yêu", artist: "AMEE", src: "music/quadang.mp3", cover: "pics/dnha22.jpg"},
+        { title: "Day By Day", artist: "JOY", src: "day-by-day.mp3", cover: "pics/yuyu2.jpg" },
+        {title: "Think About You", artist: "Kay Chau Anh", src: "music/think.mp3", cover: "pics/dnha39.jpg"},
+        {title: "Laizi", artist: "Ye Qionglin", src: "music/laizi.mp3", cover: "pics/dnha35.jpg"},
+      
+
+    ]
+  },
+  {
+    name: "Tsuyoku ni naru",
+    tracks: [
+        { title: "做自己的月亮",  artist: "小蓝背心",  src: "tieulamboitam.mp3",  cover: "pics/dnha2.jpg" },
+        { title: "Thuốc Tê", artist: "Siren", src: "thuoc-te.mp3", cover: "pics/yuyu.jpg" },
+        { title: "Chasing Lightning", artist: "Le Sserafim", src: "chasing-lightning.mp3", cover: "pics/dnha8.jpg" },
+         {title: "Lucid Dream", artist: "aespa", src: "music/luciddream.mp3", cover: "pics/dnha24.jpg"},
+        { title: "Lovesick Girls", artist: "BlackPink", src: "lovesick-girls.mp3", cover: "pics/yuyu7.jpg" },
+         {title: "Batter up", artist: "BABYMONSTER", src: "music/batterup.mp3", cover: "pics/yuki/yuki19.jpg"},
+       {title: "I'll Make You Cry", artist: "aespa", src: "music/imakeyoucry.mp3", cover: "pics/yuki/yuki3.jpg"},
+      
+    ]
+  },
+
+  // === THÊM PLAYLIST 4 VÀO ĐÂY ===
+  {
+    name: "Deep Deep Suy Suy",
+    tracks: [
+        { title: "3107-3", artist: "Umie", src: "31073.mp3", cover: "pics/dnha3.jpg"},
+         { title: "Think about You", artist: "Kay Chau Anh", src: "music/think.mp3", cover: "pics/dnha10.jpg"},
+        {title: "2 4", artist: "titie", src: "music/242.mp3", cover: "pics/dnha9.jpg"},
+        {title: "ItteKimasu", artist: "Soala", src: "music/kimasu.mp3", cover: "pics/dnha28.jpg"},
+        {title: "Bỏ Thuốc Vì Em Nhé", artist: "Kay Chau Anh", src: "music/bo-thuoc.mp3", cover: "pics/dnha13.jpg"},
+         { title: "On Rainy Days", artist: "HEIZE", src: "on-rainy-days.mp3", cover: "pics/dnha7.jpg" },
+          {title: "Ex's Hate Me 2", artist: "AMEE", src: "music/exhateme.mp3", cover: "pics/dnha29.jpg"},
+          {title: "IIWAKE", artist: "Soala", src: "music/iiwake.mp3", cover: "pics/dnha36.jpg"},
+           {title: "10 Ngàn Năm", artist: "???", src: "music/muoingannam.mp3", cover: "pics/dnha3.jpg"},
+         {title: "Ippodou", artist: "Soala", src: "music/ippodou.mp3", cover: "pics/dnha26.jpg"},
+          {title: "Text 07", artist: "titie", src: "music/text07.mp3", cover: "pics/dnha22.jpg"},
+      
+      
+    ]
+  }, // <--- Dấu phẩy kết thúc playlist 4
+
+  // === THÊM PLAYLIST 5 VÀO ĐÂY ===
+  {
+    name: "Peaceful Piano",
+    tracks: [
+        {title: "Sorezore", artist: "......", src: "music/sorezore.mp3", cover: "pics/yuyu10.jpg"},
+         {title: "MemoryB", artist: "$$$$", src: "music/memoryB.mp3", cover: "pics/yuyu7.jpg"},
+          {title: "Stay IN Memories", artist: "DUGGY", src: "music/stayinmemories.mp3", cover: "pics/yuyu2.jpg"},
+      
+      
+      
+    ]
+  } // <--- KHÔNG cần dấu phẩy ở cuối nếu đây là phần tử cuối cùng
+];
+
+// Khởi tạo biến theo dõi Playlist hiện tại
+let currentPlaylistIndex = 0; // Bắt đầu ở playlist 1 (index 0)
+let tracks = allPlaylists[currentPlaylistIndex].tracks; // Gán tracks hiện tại
+
+// DOM Elements mới cho Navigation
+const prevPlaylistBtn = document.getElementById("prev-playlist-btn");
+const nextPlaylistBtn = document.getElementById("next-playlist-btn");
+const playlistTitleEl = document.getElementById("playlist-header-title");
+
+// Cập nhật tên Playlist ban đầu
+playlistTitleEl.textContent = allPlaylists[currentPlaylistIndex].name;
+
+
 let currentIndex = 0;
 let isSeeking = false;
 let isShuffle = false;
@@ -669,4 +790,54 @@ welcomeModal?.addEventListener('click', (e) => {
     if (e.target === welcomeModal) {
         closeWelcomeModal();
     }
+});
+
+// =================== LOGIC CHUYỂN ĐỔI PLAYLIST ===================
+
+function switchPlaylist(direction) {
+  // 1. Thêm class để tạo hiệu ứng biến mất (Fade Out)
+  playlistEl.classList.add("switching");
+  playlistTitleEl.classList.add("switching");
+
+  // 2. Đợi 300ms (bằng thời gian animation CSS) rồi mới đổi dữ liệu
+  setTimeout(() => {
+    // Tính toán index playlist mới
+    if (direction === "next") {
+      currentPlaylistIndex++;
+      if (currentPlaylistIndex >= allPlaylists.length) currentPlaylistIndex = 0;
+    } else {
+      currentPlaylistIndex--;
+      if (currentPlaylistIndex < 0) currentPlaylistIndex = allPlaylists.length - 1;
+    }
+
+    // Cập nhật dữ liệu
+    const newPlaylistObj = allPlaylists[currentPlaylistIndex];
+    tracks = newPlaylistObj.tracks; // Cập nhật biến tracks toàn cục
+    playlistTitleEl.textContent = newPlaylistObj.name; // Đổi tên playlist
+
+    // Reset lại currentIndex về 0 để tránh lỗi nếu playlist mới ít bài hơn
+    // (Lưu ý: Nhạc đang phát sẽ không dừng, nhưng playlist hiển thị sẽ đổi)
+    // Nếu muốn đổi playlist là dừng nhạc cũ -> uncomment dòng dưới:
+    // currentIndex = 0; loadTrack(currentIndex, false);
+
+    // Render lại danh sách
+    renderPlaylist();
+    updatePlaylistActive(); // Highlight bài đang hát (nếu có trong list mới)
+
+    // 3. Gỡ class để hiện lại (Fade In)
+    playlistEl.classList.remove("switching");
+    playlistTitleEl.classList.remove("switching");
+    
+  }, 300);
+}
+
+// Gắn sự kiện click cho 2 nút mũi tên mới
+prevPlaylistBtn.addEventListener("click", () => {
+  pulseElement(prevPlaylistBtn); // Hiệu ứng nhún nút
+  switchPlaylist("prev");
+});
+
+nextPlaylistBtn.addEventListener("click", () => {
+  pulseElement(nextPlaylistBtn); // Hiệu ứng nhún nút
+  switchPlaylist("next");
 });

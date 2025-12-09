@@ -12,6 +12,11 @@
 
 }
 @font-face {
+  font-family: "solistaria";
+  src: url("./fonts/Solistaria.otf");
+  format("opentype");
+}
+@font-face {
   font-family: "yeliSKA";
   src: url("./fonts/YeliskaDasmithe.otf");
   format("opentype"); 
@@ -54,8 +59,8 @@
 /* ===== Player Title - Gradient chuyển động + outline pastel + shimmer ===== */
 .player-header h1 {
   font-family: "Orelia", sans-serif;
-  font-size: 1.35rem;
-  font-weight: 700;
+  font-size: 2.95rem;
+  font-weight: 900;
 
   /* Gradient pastel hồng → cam → kem → hồng */
   background: linear-gradient(
@@ -103,18 +108,19 @@
 
 .player-subtitle {
   font-family: "Folacie", system-ui, sans-serif;
+
   color:#2317FF;
 }
 .track-title {
-  font-family: "heart", sans-serif;
-  font-size: 1.25rem;
+  font-family: "solistaria", sans-serif;
+  font-size: 1.8rem;
   font-weight: 600;
   color: #fbc2eb;
 }
 
 .track-artist {
   font-family: "heart", system-ui, sans-serif;
-  font-size: 3.5rem;
+  font-size: 4.5rem;
   color:#ffd9d9;
   transition: opacity 0.3s ease, transform 0.3s ease;
 
@@ -243,7 +249,7 @@ body::before {
 }
 
 .player-subtitle {
-  font-size: 0.8rem;
+  font-size: 1.5rem;
   color: #BBE7FD;
 }
 
@@ -879,7 +885,7 @@ body::before {
     #ffd4a3
   );
   -webkit-background-clip: text;
-  color: #e4fff3;
+  color: #b4f3cf;
   animation: titleGlow 4s ease-in-out infinite;
   text-shadow: 0 0 6px rgba(255, 182, 205, 0.35);
 }
@@ -948,7 +954,7 @@ body::before {
 
 /* 4. Dòng Note bên dưới */
 .memory-note {
-  font-size: 0.9rem;
+  font-size: 1.7rem;
   color: #7a5c7a; /* Màu chữ tím nhạt cho hợp theme */
   text-align: center;
   margin-bottom: 4px;
@@ -1282,8 +1288,8 @@ body::before {
 }
 
 .welcome-modal__text {
-  font-family: "Azuka", sans-serif;
-  font-size: 1.1em;
+  font-family: "solistaria", sans-serif;
+  font-size: 1.4em;
   color: #7d4452;
   margin-bottom: 25px;
   line-height: 1.5;
@@ -1332,4 +1338,38 @@ body::before {
   object-fit: cover; /* Đảm bảo ảnh không bị méo khi cắt */
   border-radius: 10px; /* Bo góc nhẹ */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Thêm bóng */
+}
+
+/* --- PLAYLIST NAVIGATION (Thêm vào cuối file) --- */
+.playlist-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 4px;
+  margin-top: 10px;
+  border-bottom: 1px solid rgba(255, 189, 214, 0.3); /* Đường kẻ mờ ngăn cách */
+}
+
+#playlist-header-title {
+  font-family: "heart", sans-serif; /* Dùng font Heart giống tiêu đề bài hát */
+  font-size: 1.4rem;
+  color: #ff9ecd; /* Màu hồng pastel chủ đạo */
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hiệu ứng khi chuyển playlist */
+.playlist.switching,
+#playlist-header-title.switching {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none; /* Khóa click khi đang chuyển */
+}
+
+.playlist {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(0);
+  /* Điều chỉnh lại height một chút nếu cần để vừa vặn */
+  max-height: 150px; 
 }

@@ -95,7 +95,7 @@ const allPlaylists = [
       
       
       { title: "Wrong Times", artist: "puppy", src: "wrongtimes.mp3", cover: "pics/dnha16.jpg" },
-      { title: "Call Me On My Phone 2", artist: "puppy", src: "callme2.mp3", cover: "pics/dnha20.jpg" },
+      { title: "Call Me On My Phone 2", artist: "puppy", src: "music/callme22.mp3", cover: "pics/dnha20.jpg" },
       { title: "Stairway To Heaven", artist: "puppy", src: "music/stairwaytoheaven.mp3", cover: "pics/dnha17.jpg"},
       {title: "Làm lành chữa tình", artist: "tlinh", src: "music/lamlanh.mp3", cover: "pics/dnha18.jpg"},
       
@@ -107,7 +107,7 @@ const allPlaylists = [
      
       {title: "Lệ Lưu Ly", artist: "Vũ Tiên", src: "music/leluuly.mp3", cover: "pics/dnha33.jpg"},
       
-      {title: "Đừng Để Nước Mắt Rơi", artist: "VSTRA", src: "music/vi.mp3", cover: "pics/dnha38.jpg"},
+      {title: "Vì", artist: "marzuz", src: "music/vi.mp3", cover: "pics/dnha38.jpg"},
        {title: "FEVER", artist: "tlinh", src: "music/fever.mp3", cover: "pics/yuki/yuki8.jpg"},
        {title: "TOXIC", artist: "MEOVV", src: "music/toxic.mp3", cover: "pics/yuki/yuki20.jpg"},
       
@@ -166,6 +166,7 @@ const allPlaylists = [
          {title: "Ippodou", artist: "Soala", src: "music/ippodou.mp3", cover: "pics/dnha26.jpg"},
           {title: "Text 07", artist: "titie", src: "music/text07.mp3", cover: "pics/dnha22.jpg"},
          {title: "Hết Iu", artist: "UMIE", src: "music/heiu.mp3", cover: "pics/dnha/dnha49.jpg"},
+          {title: "Call It The end", artist: "ROSE", src: "music/callit.mp3", cover: "pics/dnha/dnha44.jpg"},
         
       
     ]
@@ -179,7 +180,7 @@ const allPlaylists = [
          {title: "MemoryB", artist: "$$$$", src: "music/memoryB.mp3", cover: "pics/yuyu7.jpg"},
           {title: "Stay IN Memories", artist: "DUGGY", src: "music/stayinmemories.mp3", cover: "pics/yuyu2.jpg"},
         {title: "A Town with an Ocean View", artist: "Ghibli", src: "music/oceantown.mp3", cover: "pics/dnha/dnha43.jpg"},
-       
+         {title: "Melody of The Night", artist: "Shi Jin", src: "music/melody.mp3", cover: "pics/dnha/dnha52.jpg"},
       
       
     ]
@@ -850,3 +851,17 @@ nextPlaylistBtn.addEventListener("click", () => {
   pulseElement(nextPlaylistBtn); // Hiệu ứng nhún nút
   switchPlaylist("next");
 });
+
+  const backToTopBtn = document.querySelector('.back-to-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.classList.add('show');
+    } else {
+      backToTopBtn.classList.remove('show');
+    }
+  });
+
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });

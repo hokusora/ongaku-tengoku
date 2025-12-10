@@ -3,7 +3,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family:"Orelia", system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+  font-family:"genshino", system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
     "Segoe UI", sans-serif;   
 }
 @font-face {
@@ -36,7 +36,11 @@
   src: url("./fonts/Linkgray.otf");
   format("opentype");
 }
-  
+  @font-face {
+    font-family: "genshino";
+    src:url("./fonts/Genshino.otf");
+    format("opentype");
+  }
 @font-face {
   font-family: "Azuka";
   src: url("./fonts/SVN-Azuka.otf") 
@@ -143,11 +147,14 @@
 
 body {
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  //display: flex;
+  //justify-content: center;
+  //align-items: flex-start;
   /* Xóa padding ở đây để tránh lệch layout khi dùng ::before */
+  /* Khắc phục lỗi không full-width: Đảm bảo không có lề mặc định nào. */
+  margin: 0;
   position: relative;
+  display: block;
   /* Quan trọng: KHÔNG đặt animation hay filter trực tiếp lên body */
 }
 
@@ -182,6 +189,8 @@ body::before {
 .page {
   width: 100%;
   max-width: 960px;
+  /* Thêm dòng này để căn giữa khung nhạc và ảnh */
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1306,8 +1315,8 @@ body::before {
 /* Kiểu cho nút mới */
 .welcome-modal__btn {
   /* Màu nền: Hồng tím galaxy gradient pastel */
-  background: linear-gradient(135deg, #FF69B4 0%, #8A2BE2 100%); /* Deep Pink to Blue Violet */
-  color: white; /* Chữ trắng để nổi bật trên nền đậm */
+  background: linear-gradient(135deg, #aaffee 0%, #f7ffa0 100%); /* Deep Pink to Blue Violet */
+  color: rgb(230, 123, 0); /* Chữ trắng để nổi bật trên nền đậm */
   border: none;
   padding: 10px 25px;
   border-radius: 50px;
@@ -1350,6 +1359,12 @@ body::before {
   padding: 10px 4px;
   margin-top: 10px;
   border-bottom: 1px solid rgba(255, 189, 214, 0.3); /* Đường kẻ mờ ngăn cách */
+
+/* THAY ĐỔI MÀU SẮC TẠI ĐÂY */
+  background: #c1fbf5; /* Ví dụ: Màu hồng nổi bật (Hot Pink) */
+  color: rgb(190, 240, 255); /* Màu mũi tên/chữ bên trong */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Thêm bóng cho nổi bật */
+  opacity: 1; /* Đảm bảo nút luôn hiện rõ */
 }
 
 #playlist-header-title {
@@ -1404,4 +1419,196 @@ body::before {
 .playlist-nav .btn:active {
   transform: scale(0.95);
   filter: brightness(0.9);
+}
+
+/* ===== Footer ===== */
+.site-footer {
+  background: #4f6ab5;
+  width: 100%; /* Bắt buộc */
+  color: #ffe2f1;
+  padding: 40px 20px 30px;
+  position: relative;
+  font-family: "genshino", serif;
+  margin-top: auto; /* Đẩy footer xuống đáy nếu nội dung ngắn */
+}
+
+.site-footer a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Logo + social */
+.footer-top {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-logo {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-size: 1.2rem;
+}
+
+.footer-social {
+  display: flex;
+  gap: 16px;
+}
+
+.footer-social a {
+  font-size: 1rem;
+  opacity: 0.8;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.footer-social a:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* Columns */
+.footer-columns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 24px;
+}
+
+.footer-column h4 {
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.footer-column ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-column li {
+  margin-bottom: 6px;
+}
+
+.footer-column a {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* Policies */
+.footer-policies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.footer-policies a {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* Bottom line */
+.footer-bottom {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Back-to-top button */
+.back-to-top {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  background: #d9d9f4;
+  color: #42ffd9;
+  font-size: 1.1rem;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  /* THÊM 3 THUỘC TÍNH NÀY ĐỂ CĂN GIỮA MŨI TÊN */
+  display: flex; 
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  
+  /* Đảm bảo mũi tên có kích thước hợp lý (nếu bạn chưa set) */
+  font-size: 18px;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .footer-brand {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-columns {
+    justify-content: flex-start;
+  }
+
+  .footer-column {
+    min-width: 150px;
+  }
+}
+
+/* Định dạng cho container của logo */
+.socials a {
+    /* Đảm bảo liên kết vẫn là inline-block để căn chỉnh tốt */
+    display: inline-block;
+}
+
+/* Định dạng cho hình ảnh logo (PNG/SVG) */
+.socials img.social-icon {
+    /* Đặt kích thước cố định cho logo (thường là nhỏ) */
+    width: 40px; /* Ví dụ: Chiều rộng 20 pixel */
+    height: 40px; /* Chiều cao 20 pixel */
+    
+    /* Tùy chọn: Thêm khoảng cách nếu cần */
+    margin: 0 10px; 
+    
+    /* Tùy chọn: Đảm bảo hình ảnh được căn chỉnh tốt */
+    vertical-align: middle; 
+}
+
+/* Áp dụng cho TẤT CẢ các liên kết trong footer */
+.site-footer a {
+    color: inherit; /* Kế thừa màu trắng từ footer */
+    text-decoration: none; /* Bỏ gạch chân */
+    transition: color 0.9s; /* Hiệu ứng chuyển màu mượt mà khi hover */
+}
+
+/* Hiệu ứng khi di chuột (hover) */
+.site-footer a:hover {
+    color: #8ffbf0; /* Đổi màu sang xám nhạt khi hover */
 }

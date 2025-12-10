@@ -1,4 +1,6 @@
 // =================== DOM ELEMENTS ===================
+
+
 const audio = document.getElementById("audio");
 const playBtn = document.getElementById("play-btn");
 const prevBtn = document.getElementById("prev-btn");
@@ -77,8 +79,8 @@ const allPlaylists = [
   {
     name: "R&B",
     tracks: [
+      { title: "Đừng Để Nước Mắt Rơi", artist: "VSTRA", src: "music/nuocmat.mp3", cover: "pics/yuyu/yuyu13.jpg" },
       
-     
       { title: "Vườn Sao Băng", artist: "puppy", src: "vuonsaobang.mp3", cover: "pics/yuyu3.jpg" },
       
       { title: "Nếu Lúc Đó", artist: "tlinh", src: "neulucdo.mp3", cover: "pics/yuyu5.jpg" },
@@ -125,7 +127,11 @@ const allPlaylists = [
         { title: "Day By Day", artist: "JOY", src: "day-by-day.mp3", cover: "pics/yuyu2.jpg" },
         {title: "Think About You", artist: "Kay Chau Anh", src: "music/think.mp3", cover: "pics/dnha39.jpg"},
         {title: "Laizi", artist: "Ye Qionglin", src: "music/laizi.mp3", cover: "pics/dnha35.jpg"},
-      
+        {title: "Ocean", artist: "NMIXX", src: "music/ocean.mp3", cover: "pics/yuyu/yuyu19.jpg"},
+       {title: "Ash", artist: "Le Sserafim", src: "music/ash.mp3", cover: "pics/yuyu/yuyu16.jpg"},
+        {title: "R.E.M", artist: "KISSOFLIFE", src: "music/rem.mp3", cover: "pics/dnha/dnha54.jpg"},
+       {title: "Và Thế Giới đã Mất đi Một Người Cô Đơn", artist: "marzuz", src: "music/vathegioi.mp3", cover: "pics/dnha/dnha59.jpg"},
+       
 
     ]
   },
@@ -139,7 +145,8 @@ const allPlaylists = [
         { title: "Lovesick Girls", artist: "BlackPink", src: "lovesick-girls.mp3", cover: "pics/yuyu7.jpg" },
          {title: "Batter up", artist: "BABYMONSTER", src: "music/batterup.mp3", cover: "pics/yuki/yuki19.jpg"},
        {title: "I'll Make You Cry", artist: "aespa", src: "music/imakeyoucry.mp3", cover: "pics/yuki/yuki3.jpg"},
-      
+       {title: "DAHLIA", artist: "G(I)-DLE", src: "music/dahlia.mp3", cover: "pics/yuyu/yuyu15.jpg"},
+       
     ]
   },
 
@@ -158,7 +165,8 @@ const allPlaylists = [
            {title: "10 Ngàn Năm", artist: "???", src: "music/muoingannam.mp3", cover: "pics/dnha3.jpg"},
          {title: "Ippodou", artist: "Soala", src: "music/ippodou.mp3", cover: "pics/dnha26.jpg"},
           {title: "Text 07", artist: "titie", src: "music/text07.mp3", cover: "pics/dnha22.jpg"},
-      
+         {title: "Hết Iu", artist: "UMIE", src: "music/heiu.mp3", cover: "pics/dnha/dnha49.jpg"},
+        
       
     ]
   }, // <--- Dấu phẩy kết thúc playlist 4
@@ -170,7 +178,8 @@ const allPlaylists = [
         {title: "Sorezore", artist: "......", src: "music/sorezore.mp3", cover: "pics/yuyu10.jpg"},
          {title: "MemoryB", artist: "$$$$", src: "music/memoryB.mp3", cover: "pics/yuyu7.jpg"},
           {title: "Stay IN Memories", artist: "DUGGY", src: "music/stayinmemories.mp3", cover: "pics/yuyu2.jpg"},
-      
+        {title: "A Town with an Ocean View", artist: "Ghibli", src: "music/oceantown.mp3", cover: "pics/dnha/dnha43.jpg"},
+       
       
       
     ]
@@ -443,13 +452,13 @@ audio.addEventListener("ended", () => {
 back10Btn.addEventListener("click", () => {
   pulseElement(back10Btn);
   if (!audio.duration) return;
-  audio.currentTime = Math.max(0, audio.currentTime - 10);
+  audio.currentTime = Math.max(0, audio.currentTime - 5);
 });
 
 forward10Btn.addEventListener("click", () => {
   pulseElement(forward10Btn);
   if (!audio.duration) return;
-  audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+  audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
 });
 
 // =================== TIME + SEEK ===================

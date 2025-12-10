@@ -58,8 +58,8 @@
 
 /* ===== Player Title - Gradient chuyển động + outline pastel + shimmer ===== */
 .player-header h1 {
-  font-family: "Orelia", sans-serif;
-  font-size: 2.95rem;
+  font-family: "solistaria", sans-serif;
+  font-size: 3.5rem;
   font-weight: 900;
 
   /* Gradient pastel hồng → cam → kem → hồng */
@@ -82,10 +82,9 @@
   display: inline-block;
 
   /* Outline pastel rất nhẹ */
-  -webkit-text-stroke: 0.5px rgba(255, 240, 246, 0.9);
-  text-shadow:
-    0 0 5px rgba(255, 210, 230, 0.45),
-    0 0 10px rgba(255, 200, 210, 0.3);
+  -webkit-text-stroke: none;
+  text-shadow:none;
+   
 }
 
 
@@ -241,16 +240,18 @@ body::before {
 
 /* HEADER */
 .player-header h1 {
-  font-size: 1.3rem;
+  font-size: 2.4rem;
   font-weight: 700;
-  background: linear-gradient(120deg, #ff74b2, #ff9f7b);
+  text-align: center;
+  
   -webkit-background-clip: text;
-  color: #fbc2eb;
+  color: #8ba0ff;
 }
 
 .player-subtitle {
   font-size: 1.5rem;
   color: #BBE7FD;
+  text-align: center;
 }
 
 /* MAIN */
@@ -1372,4 +1373,35 @@ body::before {
   transform: translateY(0);
   /* Điều chỉnh lại height một chút nếu cần để vừa vặn */
   max-height: 150px; 
+}
+
+/* --- PLAYLIST NAVIGATION (Sửa lại: Áp dụng màu nền gradient cho nút Prev/Next) --- */
+.playlist-nav .btn {
+  /* Loại bỏ kỹ thuật border gradient cũ */
+  /* Thiết lập nền gradient hồng cam đào pastel */
+  background: linear-gradient(
+    135deg, 
+    #ff9ecd, /* Màu hồng pastel */
+    #ffb38b, /* Màu cam pastel */
+    #ffd9b5  /* Màu đào/kem pastel */
+  );
+  
+  /* Bỏ viền (border) cũ */
+  border: none; 
+  
+  /* Đổi màu chữ sang trắng để nổi bật trên nền màu */
+  color: #fff; 
+  
+  /* Thêm bóng đổ để nút nổi bật hơn */
+  box-shadow: 0 4px 15px rgba(255, 170, 200, 0.6); 
+  
+  /* Đảm bảo nội dung không bị cắt */
+  overflow: visible; 
+  z-index: 1; 
+  transition: all 0.2s ease;
+}
+
+.playlist-nav .btn:active {
+  transform: scale(0.95);
+  filter: brightness(0.9);
 }

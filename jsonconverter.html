@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>LRC to JSON Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #ff74b2;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 250px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1.6;
+            box-sizing: border-box;
+            font-family: monospace;
+            resize: vertical;
+        }
+        .input-group, .output-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ff74b2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #e563a1;
+        }
+        #copy-btn {
+            background-color: #5cb85c;
+            margin-left: 10px;
+        }
+        #copy-btn:hover {
+            background-color: #4cae4c;
+        }
+        .info {
+            background-color: #ffe0f0;
+            border: 1px solid #ff9ecd;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Công Cụ Chuyển Đổi LRC sang JSON</h1>
+    
+    <div class="info">
+        Hướng dẫn: Dán nội dung LRC vào ô bên dưới, nhấn "Chuyển Đổi", sau đó Copy nội dung JSON ở ô bên phải để lưu vào file `.json` của bạn (ví dụ: `lyrics/baihat.json`).
+        <br>
+        Cú pháp LRC mẫu: <code>[00:12.50]Dòng lời hát số 1</code>
+    </div>
+
+    <div style="display: flex; gap: 20px;">
+        <div class="input-group" style="flex: 1;">
+            <label for="lrc-input">Nội dung LRC (Input):</label>
+            <textarea id="lrc-input" placeholder="Dán nội dung file .lrc của bạn vào đây..." rows="15"></textarea>
+            <button onclick="handleConversion()">Chuyển Đổi sang JSON</button>
+        </div>
+        
+        <div class="output-group" style="flex: 1;">
+            <label for="json-output">Nội dung JSON (Output):</label>
+            <textarea id="json-output" readonly placeholder="Kết quả JSON sẽ hiển thị ở đây."></textarea>
+            <button id="copy-btn" onclick="copyJSON()">Copy JSON</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // =========================================================
+    // HÀM CHUYỂN ĐỔI (ĐÃ CÓ Ở PHẦN TRƯỚC)
+    // =========================================================
+
+    function convertLRCtoJSON(lrcText) {
+      const lines = lrcText.split('\n');
+      const lyricsArray = [];
+
+      // Regex: tìm [00:12.50]Nội dung -> ['[00:12.50]Nội dung', '00', '12', '50', 'Nội dung']
+      const lrcRegex = /\[(\d{2}):(\d{2})\.(\d{2,3})\](.*)/;
+
+      lines.forEach(line => {
+        const trimmedLine = line.trim();
+        if (!trimmedLine) return; 
+
+        const match = trimmedLine.match(lrcRegex);
+
+        if (match) {
+          const minutes = parseInt(match[1], 10);
+          const seconds = parseInt(match[2], 10);
+          let milliseconds = parseInt(match[3], 10);
+          const text = match[4].trim(); 
+
+          // Xử lý mili giây (Nếu là .50)
+          if (match[3].length === 2) {
+             milliseconds = milliseconds * 10; 
+          }
+          
+          // Tính tổng thời gian theo giây
+          const totalTime = minutes * 60 + seconds + (milliseconds / 1000);
+          
+          lyricsArray.push({
+            time: parseFloat(totalTime.toFixed(2)),
+            text: text || "..." 
+          });
+        }
+      });
+
+      return lyricsArray;
+    }
+
+    // =========================================================
+    // LOGIC GIAO DIỆN
+    // =========================================================
+    
+    const lrcInput = document.getElementById('lrc-input');
+    const jsonOutput = document.getElementById('json-output');
+
+    // Xử lý sự kiện nhấn nút "Chuyển Đổi"
+    function handleConversion() {
+        const lrcText = lrcInput.value;
+        if (!lrcText.trim()) {
+            jsonOutput.value = "Vui lòng dán nội dung LRC vào ô bên trái.";
+            return;
+        }
+
+        try {
+            const jsonArray = convertLRCtoJSON(lrcText);
+            
+            // Định dạng kết quả JSON để dễ đọc và copy
+            const formattedJSON = JSON.stringify(jsonArray, null, 2);
+            
+            jsonOutput.value = formattedJSON;
+            alert("Chuyển đổi thành công! Vui lòng Copy nội dung JSON.");
+
+        } catch (error) {
+            jsonOutput.value = "Lỗi trong quá trình chuyển đổi. Vui lòng kiểm tra lại định dạng LRC.";
+            console.error("Conversion Error:", error);
+        }
+    }
+
+    // Xử lý sự kiện nhấn nút "Copy JSON"
+    function copyJSON() {
+        if (!jsonOutput.value) {
+            alert("Không có nội dung để sao chép.");
+            return;
+        }
+        
+        jsonOutput.select();
+        jsonOutput.setSelectionRange(0, 99999); // Dành cho thiết bị di động
+        
+        try {
+            document.execCommand('copy');
+            alert("Nội dung JSON đã được sao chép vào clipboard!");
+        } catch (err) {
+            console.error('Không thể sao chép: ', err);
+            alert("Sao chép thất bại. Vui lòng chọn và Copy thủ công.");
+        }
+    }
+</script>
+
+</body>
+</html>

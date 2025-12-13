@@ -33,42 +33,7 @@ const ctx = canvas.getContext("2d");
 
 // =================== PLAYLIST ===================
 // const tracks = [
-//   { title: "Thuốc Tê", artist: "Siren", src: "thuoc-te.mp3", cover: "pics/yuyu.jpg" },
-//   { title: "Day By Day", artist: "JOY", src: "day-by-day.mp3", cover: "pics/yuyu2.jpg" },
-//   { title: "Vườn Sao Băng", artist: "puppy", src: "vuonsaobang.mp3", cover: "pics/yuyu3.jpg" },
-//   { title: "The Way I Still Love You", artist: "Hattie", src: "The-Way.mp3", cover: "pics/yuyu4.jpg" },
-//   { title: "Nếu Lúc Đó", artist: "tlinh", src: "neulucdo.mp3", cover: "pics/yuyu5.jpg" },
-//   { title: "In The Rain", artist: "XG", src: "in-the-rain.mp3", cover: "pics/yuyu6.jpg" },
-//   { title: "Lovesick Girls", artist: "BlackPink", src: "lovesick-girls.mp3", cover: "pics/yuyu7.jpg" },
-//   { title: "Love My Friend", artist: "Shayda", src: "lovemyfriend.mp3", cover: "pics/yuyu8.jpg" },
 
-//   // 8 bài mới – ĐỔI LẠI THEO FILE CỦA BẠN
-//   { title: "做自己的月亮",  artist: "小蓝背心",  src: "tieulamboitam.mp3",  cover: "pics/dnha2.jpg" },
-//   { title: "3107-3", artist: "Umie", src: "31073.mp3", cover: "pics/dnha3.jpg"},
-//   { title: "Anh Iu", artist: "Saabirose", src: "anh-iu.mp3", cover: "pics/dnha4.jpg" },
-//   { title: "Lucid Dream", artist: "Aespa", src: "lucid-dream.mp3", cover: "pics/dnha6.jpg" },
-//   { title: "On Rainy Days", artist: "HEIZE", src: "on-rainy-days.mp3", cover: "pics/dnha7.jpg" },
-//   { title: "Chasing Lightning", artist: "Le Sserafim", src: "chasing-lightning.mp3", cover: "pics/dnha8.jpg" },
-//   { title: "Wrong Times", artist: "puppy", src: "wrongtimes.mp3", cover: "pics/dnha16.jpg" },
-//   { title: "Call Me On My Phone 2", artist: "puppy", src: "callme2.mp3", cover: "pics/dnha20.jpg" },
-
-//   { title: "Stairrway To Heaven", artist: "puppy", src: "music/stairwaytoheaven.mp3", cover: "pics/dnha17.jpg"},
-//   {title: "Làm lành chữa tình", artist: "tlinh", src: "music/lamlanh.mp3", cover: "pics/dnha18.jpg"},
-//   {title: "Bỏ Thuốc Vì Em Nhé", artist: "Kay Chau Anh", src: "music/bo-thuoc.mp3", cover: "pics/dnha13.jpg"},
-//   {title: "Giấc Mơ", artist: "Catchellers", src: "music/giacmo.mp3", cover: "pics/dnha14.jpg"},
-      
-//    {title: "Miền Mộng Mị", artist: "AMEE", src: "music/mienmongmi.mp3", cover: "pics/yuyu10.jpg"},
-//    {title: "Hai Mươi Hai", artist: "AMEE", src: "music/haihai.mp3", cover: "pics/yuyu11.jpg"},
-//      {title: "Trời Giấu Trời Mang Đi", artist: "AMEE", src: "music/troigiautroimangdi.mp3", cover: "pics/yuyu9.jpg"},
-//      { title: "Thật Quá Đáng Để Yêu", artist: "AMEE", src: "music/quadang.mp3", cover: "pics/dnha22.jpg"},
-//  {title: "Ngẩn Nger", artist: "puppy", src: "music/ngannger.mp3", cover: "pics/dnha1.jpg"},
-//  {title: "Lucid Dream", artist: "aespa", src: "music/luciddream.mp3", cover: "pics/dnha24.jpg"},
-//  {title: "Ex's Hate Me 2", artist: "AMEE", src: "music/exhateme.mp3", cover: "pics/dnha29.jpg"},
-//  {title: "ItteKimasu", artist: "Soala", src: "music/kimasu.mp3", cover: "pics/dnha28.jpg"},
-//  {title: "Lệ Lưu Ly", artist: "Vũ Tiên", src: "music/leluuly.mp3", cover: "pics/dnha33.jpg"},
-// {title: "Trong Mắt Đều Là Anh", artist: "Tiểu Lam Bối Tâm", src: "music/trongmat.mp3", cover: "pics/dnha35.jpg"},
-// {title: "Đừng Để Nước Mắt Rơi", artist: "VSTRA", src: "music/vi.mp3", cover: "pics/dnha38.jpg"},
-// {title: "Think About You", artist: "Kay Chau Anh", src: "music/think.mp3", cover: "pics/dnha39.jpg"},
 //  {title: "2 4", artist: "titie", src: "music/242.mp3", cover: "pics/dnha9.jpg"},
 // ]
 
@@ -79,9 +44,13 @@ const allPlaylists = [
   {
     name: "R&B",
     tracks: [
-      { title: "Đừng Để Nước Mắt Rơi", artist: "VSTRA", src: "music/nuocmat.mp3", cover: "pics/yuyu/yuyu13.jpg" },
+      { title: "Đừng Để Nước Mắt Rơi", artist: "VSTRA", src: "music/nuocmat.mp3", cover: "pics/yuyu/yuyu13.jpg",
+        lyrics: "lyrics/nuocmat.json" // <--- ĐẢM BẢO ĐƯỜNG DẪN NÀY ĐÚNG
+       },
       
-      { title: "Vườn Sao Băng", artist: "puppy", src: "vuonsaobang.mp3", cover: "pics/yuyu3.jpg" },
+      { title: "Vườn Sao Băng", artist: "puppy", src: "vuonsaobang.mp3", cover: "pics/yuyu3.jpg",
+         lyrics: "lyrics/vuonsaobang.json" 
+       },
       
       { title: "Nếu Lúc Đó", artist: "tlinh", src: "neulucdo.mp3", cover: "pics/yuyu5.jpg" },
       { title: "In The Rain", artist: "XG", src: "in-the-rain.mp3", cover: "pics/yuyu6.jpg" },
@@ -94,7 +63,9 @@ const allPlaylists = [
       {title: "Where You Are", artist: "NINGNING", src: "music/ningning.mp3", cover: "pics/yuki/yuki12.jpg"},
       
       
-      { title: "Wrong Times", artist: "puppy", src: "wrongtimes.mp3", cover: "pics/dnha16.jpg" },
+      { title: "Wrong Times", artist: "puppy", src: "wrongtimes.mp3", cover: "pics/dnha16.jpg" ,
+        lyrics: "lyrics/wrongtimes.json"
+      },
       { title: "Call Me On My Phone 2", artist: "puppy", src: "music/callme22.mp3", cover: "pics/dnha20.jpg" },
       { title: "Stairway To Heaven", artist: "puppy", src: "music/stairwaytoheaven.mp3", cover: "pics/dnha17.jpg"},
       {title: "Làm lành chữa tình", artist: "tlinh", src: "music/lamlanh.mp3", cover: "pics/dnha18.jpg"},
@@ -108,7 +79,9 @@ const allPlaylists = [
       {title: "Lệ Lưu Ly", artist: "Vũ Tiên", src: "music/leluuly.mp3", cover: "pics/dnha33.jpg"},
       
       {title: "Vì", artist: "marzuz", src: "music/vi.mp3", cover: "pics/dnha38.jpg"},
-       {title: "FEVER", artist: "tlinh", src: "music/fever.mp3", cover: "pics/yuki/yuki8.jpg"},
+       {title: "FEVER", artist: "tlinh", src: "music/fever.mp3", cover: "pics/yuki/yuki8.jpg",
+          lyrics: "lyrics/fever.json"
+       },
        {title: "TOXIC", artist: "MEOVV", src: "music/toxic.mp3", cover: "pics/yuki/yuki20.jpg"},
       
       
@@ -295,6 +268,8 @@ function loadTrack(index, autoPlay = false) {
     coverImg.src = track.cover;
     trackTitle.textContent = track.title;
     trackArtist.textContent = track.artist;
+
+    fetchLyrics(track.lyrics);
 
     trackInfo.classList.remove("switching");
     coverInner.classList.remove("switching");
@@ -865,3 +840,153 @@ nextPlaylistBtn.addEventListener("click", () => {
   backToTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
+
+  // =================== LYRICS LOGIC ===================
+
+const lyricsContainer = document.getElementById('lyrics-content');
+let currentLyrics = []; // Mảng chứa lời bài hát hiện tại
+
+// Biến cờ: TRUE nếu người dùng đang cuộn thủ công, FALSE nếu đang tự động cuộn
+let isUserScrolling = false; // <--- THÊM DÒNG NÀY
+
+// Logic: Ngăn chặn auto-scroll khi người dùng đang cuộn
+let scrollTimeout;
+
+lyricsContainer.addEventListener('wheel', () => {
+    isUserScrolling = true;
+    clearTimeout(scrollTimeout);
+    
+    // Sau 1 giây không cuộn, bật lại auto-scroll
+    scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+    }, 1000); 
+});
+
+// Thêm cả sự kiện touchstart cho thiết bị di động
+lyricsContainer.addEventListener('touchstart', () => {
+    isUserScrolling = true;
+    clearTimeout(scrollTimeout);
+    
+    scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+    }, 1000); 
+}, { passive: true });
+
+// 1. Hàm tải lời bài hát từ file JSON
+async function fetchLyrics(url) {
+  // Reset giao diện trước khi tải
+  lyricsContainer.innerHTML = '<p class="lyric-line">Đang tải lời...</p>';
+  currentLyrics = [];
+
+  if (!url) {
+    lyricsContainer.innerHTML = '<p class="lyric-line">Chưa có lời bài hát này.</p>';
+    return;
+  }
+
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Lỗi tải file");
+    const data = await response.json();
+    currentLyrics = data;
+    renderLyrics(data);
+  } catch (error) {
+    console.error(error);
+    lyricsContainer.innerHTML = '<p class="lyric-line">Không thể tải lời bài hát.</p>';
+  }
+}
+
+// 2. Hàm hiển thị lời lên màn hình
+function renderLyrics(data) {
+  lyricsContainer.innerHTML = ""; // Xóa nội dung cũ
+  
+  // Tạo một khoảng trống đầu danh sách để dòng đầu tiên nằm giữa đẹp hơn
+  const spacerTop = document.createElement("div");
+  spacerTop.style.height = "100px";
+  lyricsContainer.appendChild(spacerTop);
+
+  data.forEach((line, index) => {
+    const p = document.createElement("p");
+    p.className = "lyric-line";
+    p.textContent = line.text;
+    p.dataset.time = line.time; // Lưu thời gian vào thuộc tính data
+    p.dataset.index = index;
+
+    // Sự kiện Click để tua nhạc
+    p.addEventListener("click", () => {
+      audio.currentTime = line.time;
+      audio.play();
+      setPlayingUI(true); // Đảm bảo UI chuyển sang trạng thái Play
+    });
+
+    lyricsContainer.appendChild(p);
+  });
+
+  // Tạo khoảng trống cuối danh sách
+  const spacerBottom = document.createElement("div");
+  spacerBottom.style.height = "150px";
+  lyricsContainer.appendChild(spacerBottom);
+}
+
+// 3. Hàm đồng bộ lời bài hát (Highlight & Scroll)
+function syncLyrics() {
+  if (!currentLyrics.length) return;
+
+  const currentTime = audio.currentTime;
+  
+  // Tìm dòng lời hát hiện tại (Dòng có thời gian bắt đầu <= thời gian hiện tại)
+  // Ta tìm dòng có thời gian lớn hơn currentTime, sau đó lùi lại 1 index
+  let activeIndex = currentLyrics.findIndex(line => line.time > currentTime) - 1;
+
+  // Xử lý trường hợp đang hát dòng cuối cùng (findIndex trả về -1)
+  if (activeIndex === -2) { // Không tìm thấy dòng nào > currentTime => đang ở cuối bài
+     activeIndex = currentLyrics.length - 1;
+  }
+  // Xử lý trường hợp chưa hát đến dòng đầu tiên
+  if (activeIndex < 0) activeIndex = 0; 
+
+  // Cập nhật UI
+  const allLines = document.querySelectorAll(".lyric-line");
+  
+  // Xóa class active cũ
+  const currentActive = document.querySelector(".lyric-line.active");
+  if (currentActive) currentActive.classList.remove("active");
+
+  
+// Thêm class active mới
+if (allLines[activeIndex]) {
+    const activeLine = allLines[activeIndex];
+    activeLine.classList.remove("prev-active"); // (Nếu bạn có dùng)
+    activeLine.classList.add("active");
+
+    // === PHẦN SỬA LỖI CUỘN TRANG (Thay thế scrollIntoView) ===
+    
+    // 1. Kiểm tra trạng thái người dùng
+    if (isUserScrolling) {
+        // Nếu người dùng đang cuộn thủ công, KHÔNG làm gì cả
+        return; 
+    }
+
+    // 2. Tính toán vị trí cuộn mới cho KHUNG LYRICS (lyricsContainer)
+    
+    // Chiều cao của khung chứa lyrics
+    const containerHeight = lyricsContainer.clientHeight; 
+    // Vị trí của dòng đang hát (so với khung lyrics)
+    const lineOffsetTop = activeLine.offsetTop; 
+    // Chiều cao của dòng đang hát
+    const lineHeight = activeLine.offsetHeight; 
+
+    // Tính toán vị trí cuộn lý tưởng (căn giữa dòng đang hát)
+    // Vị trí mới = (Vị trí dòng) - (Nửa chiều cao khung) + (Nửa chiều cao dòng)
+    const newScrollTop = lineOffsetTop - (containerHeight / 2) + (lineHeight / 2);
+
+    // 3. Thực hiện cuộn mượt cho KHUNG LYRICS
+    lyricsContainer.scrollTo({
+        top: newScrollTop,
+        behavior: 'smooth' // Cuộn mượt chỉ trong khung lyrics
+    });
+    // =======================================================
+}
+}
+// 4. Gắn sự kiện vào Audio
+// Thêm syncLyrics vào sự kiện timeupdate đã có hoặc tạo mới
+audio.addEventListener("timeupdate", syncLyrics);

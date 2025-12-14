@@ -129,12 +129,28 @@
 
     </div> <!-- END .player -->
 
-<div class="lyrics-panel">
-    <h3 class="lyrics-header">Lời bài hát</h3>
+<div class="lyrics-panel right-panel-tabs">
+  <div class="tab-header">
+    <button class="tab-btn active" id="tab-lyrics-btn">Lời bài hát</button>
+    <button class="tab-btn" id="tab-queue-btn">Hàng đợi</button>
+  </div>
+
+  <div id="tab-content-lyrics" class="tab-content active">
     <div id="lyrics-content" class="lyrics-content">
       <p class="lyric-line">Đang tải lời bài hát...</p>
     </div>
   </div>
+
+  <div id="tab-content-queue" class="tab-content">
+    <div class="queue-container">
+      <h4 class="queue-title">Tiếp theo <span id="queue-count">(0)</span></h4>
+      <p class="queue-empty-msg">Chưa có bài nào trong hàng đợi...<br>Thêm nhạc để chill nhé ✨</p>
+      <ul id="queue-list" class="queue-list">
+        </ul>
+    </div>
+  </div>
+</div>
+
   </div>
 
     <!-- SECTION MEMORIES — xuất hiện khi scroll xuống -->

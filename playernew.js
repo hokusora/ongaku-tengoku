@@ -31,6 +31,19 @@ const titleWrap = document.querySelector(".track-title-wrap");
 const canvas = document.getElementById("waveform");
 const ctx = canvas.getContext("2d");
 
+// ... (Các const cũ giữ nguyên)
+
+// === QUEUE ELEMENTS ===
+const tabLyricsBtn = document.getElementById("tab-lyrics-btn");
+const tabQueueBtn = document.getElementById("tab-queue-btn");
+const contentLyrics = document.getElementById("tab-content-lyrics");
+const contentQueue = document.getElementById("tab-content-queue");
+const queueListEl = document.getElementById("queue-list");
+const queueCountEl = document.getElementById("queue-count");
+const queueEmptyMsg = document.querySelector(".queue-empty-msg");
+
+let queue = []; // Mảng chứa danh sách chờ
+
 // =================== PLAYLIST ===================
 // const tracks = [
 
@@ -56,7 +69,9 @@ const allPlaylists = [
         lyrics: "lyrics/wrongtimes.json",
         fontSet: "jp"
       },
-      { title: "Nếu Lúc Đó", artist: "tlinh", src: "neulucdo.mp3", cover: "pics/yuyu5.jpg" },
+      { title: "Nếu Lúc Đó", artist: "tlinh", src: "neulucdo.mp3", cover: "pics/yuyu5.jpg",
+        lyrics: "lyrics/neulucdo.json"
+       },
       { title: "In The Rain", artist: "XG", src: "in-the-rain.mp3", cover: "pics/yuyu6.jpg" },
       
       { title: "Love My Friend", artist: "Shayda", src: "lovemyfriend.mp3", cover: "pics/yuyu8.jpg" },
@@ -72,18 +87,21 @@ const allPlaylists = [
       
        
       
-      {title: "Ngẩn Nger", artist: "puppy", src: "music/ngannger.mp3", cover: "pics/dnha1.jpg"},
+      {title: "Ngẩn Nger", artist: "puppy", src: "music/ngannger.mp3", cover: "pics/dnha1.jpg",
+        lyrics: "lyrics/ngannger.json"
+      },
      
      
       {title: "Lệ Lưu Ly", artist: "Vũ Tiên", src: "music/leluuly.mp3", cover: "pics/dnha33.jpg"},
       
-      {title: "Vì", artist: "marzuz", src: "music/vi.mp3", cover: "pics/dnha38.jpg"},
+      
        {title: "FEVER", artist: "tlinh", src: "music/fever.mp3", cover: "pics/yuki/yuki8.jpg",
           lyrics: "lyrics/fever.json"
        },
        {title: "TOXIC", artist: "MEOVV", src: "music/toxic.mp3", cover: "pics/yuki/yuki20.jpg"},
        {title: "Love Language", artist: "VIVIZ UMJI", src: "music/lovelanguage.mp3", cover: "pics/dnha/dnha75.jpg"},
-       
+          {title: "NVMD", artist: "Denise Julia", src: "music/nvmd.mp3", cover: "pics/dnha/dnha79.jpg"}
+      
       
     ]
   },
@@ -94,21 +112,29 @@ const allPlaylists = [
        {title: "Trời Giấu Trời Mang Đi", artist: "AMEE", src: "music/troigiautroimangdi.mp3", cover: "pics/yuyu9.jpg",
           lyrics:"lyrics/troigiau.json"
        },
-       {title: "Hai Mươi Hai", artist: "AMEE", src: "music/haihai.mp3", cover: "pics/yuyu11.jpg"},
+       {title: "Hai Mươi Hai", artist: "AMEE", src: "music/haihai.mp3", cover: "pics/yuyu11.jpg",
+          lyrics: "lyrics/haihai.json"
+       },
         {title: "Miền Mộng Mị", artist: "AMEE", src: "music/mienmongmi.mp3", cover: "pics/dnha/dnha75.jpg",
            lyrics: "lyrics/mienmongmi.json"
         },
+           {title: "Yêu thì Yêu không Yêu thì Yêu", artist: "AMEE", src: "music/iuthiiu.mp3", cover: "pics/dnha35.jpg"},
+      
+        {title: "Vì", artist: "marzuz", src: "music/vi.mp3", cover: "pics/dnha38.jpg"},
        {title: "Giấc Mơ", artist: "Catchellers", src: "music/giacmo.mp3", cover: "pics/dnha14.jpg"},
        {title: "Trong Mắt Đều Là Anh", artist: "Tiểu Lam Bối Tâm", src: "music/trongmat.mp3", cover: "pics/dnha35.jpg"},
-       { title: "Thật Quá Đáng Để Yêu", artist: "AMEE", src: "music/quadang.mp3", cover: "pics/dnha22.jpg"},
+       { title: "Thật Quá Đáng Để Yêu", artist: "AMEE", src: "music/quadang.mp3", cover: "pics/dnha22.jpg",
+          lyrics: "lyrics/quadang.json"
+       },
         { title: "Day By Day", artist: "JOY", src: "day-by-day.mp3", cover: "pics/yuyu2.jpg" },
-        {title: "Think About You", artist: "Kay Chau Anh", src: "music/think.mp3", cover: "pics/dnha39.jpg"},
+        
         {title: "Laizi", artist: "Ye Qionglin", src: "music/laizi.mp3", cover: "pics/dnha35.jpg"},
         {title: "Ocean", artist: "NMIXX", src: "music/ocean.mp3", cover: "pics/yuyu/yuyu19.jpg"},
        {title: "Ash", artist: "Le Sserafim", src: "music/ash.mp3", cover: "pics/yuyu/yuyu16.jpg"},
         {title: "R.E.M", artist: "KISSOFLIFE", src: "music/rem.mp3", cover: "pics/dnha/dnha54.jpg"},
        {title: "Và Thế Giới đã Mất đi Một Người Cô Đơn", artist: "marzuz", src: "music/vathegioi.mp3", cover: "pics/dnha/dnha59.jpg"},
-       
+          {title: "Picture of You", artist: "Sara kays", src: "music/picture.mp3", cover: "pics/dnha/dnha55.jpg"}
+      
 
     ]
   },
@@ -138,12 +164,14 @@ const allPlaylists = [
         {title: "ItteKimasu", artist: "Soala", src: "music/kimasu.mp3", cover: "pics/dnha28.jpg"},
         {title: "Bỏ Thuốc Vì Em Nhé", artist: "Kay Chau Anh", src: "music/bo-thuoc.mp3", cover: "pics/dnha13.jpg"},
          { title: "On Rainy Days", artist: "HEIZE", src: "on-rainy-days.mp3", cover: "pics/dnha7.jpg" },
-          {title: "Ex's Hate Me 2", artist: "AMEE", src: "music/exhateme.mp3", cover: "pics/dnha29.jpg"},
+          {title: "Ex's Hate Me 2", artist: "AMEE", src: "music/exhateme.mp3", cover: "pics/dnha29.jpg",
+            lyrics: "lyrics/exhateme2.json"
+          },
           {title: "IIWAKE", artist: "Soala", src: "music/iiwake.mp3", cover: "pics/dnha36.jpg"},
            {title: "10 Ngàn Năm", artist: "???", src: "music/muoingannam.mp3", cover: "pics/dnha3.jpg"},
          {title: "Ippodou", artist: "Soala", src: "music/ippodou.mp3", cover: "pics/dnha26.jpg"},
           {title: "Text 07", artist: "titie", src: "music/text07.mp3", cover: "pics/dnha22.jpg"},
-         {title: "Hết Iu", artist: "UMIE", src: "music/heiu.mp3", cover: "pics/dnha/dnha49.jpg"},
+         {title: "Hết Iu", artist: "UMIE", src: "music/hetiu.mp3", cover: "pics/dnha/dnha49.jpg"},
           {title: "Call It The end", artist: "ROSE", src: "music/callit.mp3", cover: "pics/dnha/dnha44.jpg"},
         
       
@@ -159,7 +187,7 @@ const allPlaylists = [
           {title: "Stay IN Memories", artist: "DUGGY", src: "music/stayinmemories.mp3", cover: "pics/yuyu2.jpg"},
         {title: "A Town with an Ocean View", artist: "Ghibli", src: "music/oceantown.mp3", cover: "pics/dnha/dnha43.jpg"},
          {title: "Melody of The Night", artist: "Shi Jin", src: "music/melody.mp3", cover: "pics/dnha/dnha52.jpg"},
-      
+         {title: "Recollection", artist: "October", src: "music/recollection.mp3", cover: "pics/dnha/dnha71.jpg"}
       
     ]
   } // <--- KHÔNG cần dấu phẩy ở cuối nếu đây là phần tử cuối cùng
@@ -229,12 +257,26 @@ function renderPlaylist() {
     li.className = "playlist-item";
     if (idx === currentIndex) li.classList.add("active");
 
+    // Click vào vùng li (trừ nút add) để phát nhạc
     li.innerHTML = `
-      <span class="playlist-title">${track.title}</span>
-      <span class="playlist-artist">${track.artist}</span>
+      <div class="playlist-info" style="pointer-events: none;">
+        <span class="playlist-title">${track.title}</span>
+        <span class="playlist-artist">${track.artist}</span>
+      </div>
+      <button class="btn-add-queue" title="Thêm vào chờ">
+        <i class="fa-solid fa-plus"></i> </button>
     `;
 
-    li.addEventListener("click", () => {
+    // Logic click
+    li.addEventListener("click", (e) => {
+      // Nếu click vào nút Add Queue
+      if (e.target.closest(".btn-add-queue")) {
+        const btn = e.target.closest(".btn-add-queue");
+        addToQueue(track, btn); // Gọi hàm thêm vào queue
+        return;
+      }
+      
+      // Nếu click vào bài hát -> Phát ngay
       currentIndex = idx;
       loadTrack(currentIndex, true);
       updatePlaylistActive();
@@ -406,39 +448,51 @@ prevBtn.addEventListener("click", () => {
   loadTrack(idx, true);
 });
 
-nextBtn.addEventListener("click", () => {
-  pulseElement(nextBtn);
-  const idx = getNextIndexButton();
-  loadTrack(idx, true);
-});
 
-// Khi hết bài
-audio.addEventListener("ended", () => {
-  if (repeatMode === "one") {
-    loadTrack(currentIndex, true);
-    return;
-  }
+// nextBtn.addEventListener("click", () => {
+//   pulseElement(nextBtn);
+//   // Ưu tiên Queue
+//   if (queue.length > 0) {
+//       playNextSong(); 
+//   } else {
+//       const idx = getNextIndexButton();
+//       loadTrack(idx, true);
+//   }
+// });
+// // Khi hết bài
+// audio.addEventListener("ended", () => {
+//   if (repeatMode === "one") {
+//     audio.currentTime = 0;
+//     audio.play();
+//     return;
+//   }
 
-  if (isShuffle) {
-    const idx = getRandomIndex();
-    loadTrack(idx, true);
-    return;
-  }
+//   // Ưu tiên Queue trước khi Shuffle hay Playlist
+//   if (queue.length > 0) {
+//       playNextSong();
+//       return;
+//   }
 
-  const nextIndex = currentIndex + 1;
+//   // Nếu không có queue thì chạy logic cũ
+//   if (isShuffle) {
+//     const idx = getRandomIndex();
+//     loadTrack(idx, true);
+//     return;
+//   }
 
-  if (nextIndex < tracks.length) {
-    loadTrack(nextIndex, true);
-  } else {
-    if (repeatMode === "all") {
-      loadTrack(0, true);
-    } else {
-      setPlayingUI(false);
-      audio.pause();
-      audio.currentTime = 0;
-    }
-  }
-});
+//   const nextIndex = currentIndex + 1;
+//   if (nextIndex < tracks.length) {
+//     loadTrack(nextIndex, true);
+//   } else {
+//      if (repeatMode === "all") {
+//        loadTrack(0, true);
+//      } else {
+//        setPlayingUI(false);
+//        audio.pause();
+//        audio.currentTime = 0;
+//      }
+//   }
+// });
 
 // =================== -10s / +10s ===================
 back10Btn.addEventListener("click", () => {
@@ -1010,3 +1064,172 @@ if (allLines[activeIndex]) {
 // 4. Gắn sự kiện vào Audio
 // Thêm syncLyrics vào sự kiện timeupdate đã có hoặc tạo mới
 audio.addEventListener("timeupdate", syncLyrics);
+
+// =================== QUEUE LOGIC & ANIMATION ===================
+
+// 1. Chuyển Tab (Lyrics <-> Queue)
+tabLyricsBtn.addEventListener("click", () => switchTab("lyrics"));
+tabQueueBtn.addEventListener("click", () => switchTab("queue"));
+
+function switchTab(tabName) {
+  if (tabName === "lyrics") {
+    tabLyricsBtn.classList.add("active");
+    tabQueueBtn.classList.remove("active");
+    contentLyrics.classList.add("active");
+    contentQueue.classList.remove("active");
+  } else {
+    tabQueueBtn.classList.add("active");
+    tabLyricsBtn.classList.remove("active");
+    contentQueue.classList.add("active");
+    contentLyrics.classList.remove("active");
+  }
+}
+
+// 2. Thêm vào Queue (Kèm hiệu ứng bay)
+function addToQueue(track, startElem) {
+  // Logic: Thêm vào mảng
+  queue.push(track);
+  renderQueue();
+  
+  // Animation: Bay từ nút bấm -> Tab Queue
+  if (startElem) {
+    const startRect = startElem.getBoundingClientRect();
+    const endRect = tabQueueBtn.getBoundingClientRect();
+    
+    const flyingDot = document.createElement("div");
+    flyingDot.className = "flying-dot";
+    
+    // Vị trí bắt đầu
+    flyingDot.style.left = `${startRect.left + 10}px`;
+    flyingDot.style.top = `${startRect.top + 10}px`;
+    
+    document.body.appendChild(flyingDot);
+    
+    // Tính toán bay
+    const deltaX = endRect.left - startRect.left + endRect.width / 2;
+    const deltaY = endRect.top - startRect.top + endRect.height / 2;
+    
+    flyingDot.animate([
+      { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+      { transform: `translate(${deltaX}px, ${deltaY}px) scale(0.5)`, opacity: 0 }
+    ], {
+      duration: 2000,
+      easing: 'cubic-bezier(0.25, 1, 0.5, 1)', // Đổi easing cho mềm mại hơn
+      fill: 'forwards'
+    });
+    
+    setTimeout(() => flyingDot.remove(), 2100);
+    
+    // Rung nhẹ nút tab Queue để báo hiệu
+    setTimeout(() => {
+        tabQueueBtn.style.transform = "scale(1.2)";
+        setTimeout(() => tabQueueBtn.style.transform = "", 200);
+    }, 600);
+  }
+}
+
+// 3. Render danh sách Queue
+function renderQueue() {
+  queueListEl.innerHTML = "";
+  queueCountEl.textContent = `(${queue.length})`;
+  
+  if (queue.length === 0) {
+    queueEmptyMsg.style.display = "block";
+  } else {
+    queueEmptyMsg.style.display = "none";
+    
+    queue.forEach((track, index) => {
+      const li = document.createElement("li");
+      li.className = "queue-item";
+      li.innerHTML = `
+        <div class="q-info">
+          <span class="q-title">${track.title}</span>
+          <span class="q-artist">${track.artist}</span>
+        </div>
+        <button class="q-remove" onclick="removeFromQueue(${index})">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      `;
+      queueListEl.appendChild(li);
+    });
+  }
+}
+
+// 4. Xóa khỏi Queue
+window.removeFromQueue = function(index) {
+  queue.splice(index, 1);
+  renderQueue();
+}
+
+// 5. Override (Ghi đè) Logic nút Next và Ended
+// Quan trọng: Sửa lại logic Next để ưu tiên Queue
+
+const originalGetNextIndex = getNextIndexButton; // Lưu hàm cũ nếu cần
+
+function playNextSong() {
+  // Ưu tiên 1: Có bài trong queue
+  if (queue.length > 0) {
+    const nextTrack = queue.shift(); // Lấy bài đầu tiên ra
+    renderQueue();
+    loadTrackDirectly(nextTrack); // Hàm tự viết để load trực tiếp
+  } else {
+    // Ưu tiên 2: Không có queue -> Next bình thường
+    const idx = (currentIndex + 1) % tracks.length;
+    loadTrack(idx, true);
+  }
+}
+
+// Hàm load bài hát trực tiếp (Không qua index playlist)
+function loadTrackDirectly(track) {
+  // Hiệu ứng chuyển
+  trackInfo.classList.add("switching");
+  coverInner.classList.add("switching");
+  
+  setTimeout(() => {
+    audio.src = track.src;
+    coverImg.src = track.cover;
+    trackTitle.textContent = track.title;
+    trackArtist.textContent = track.artist;
+    
+    // Font Lyrics logic
+    const currentFontSet = track.fontSet || "vi";
+    lyricsContainer.className = "lyrics-content"; // Reset class
+    lyricsContainer.classList.add(`font-set-${currentFontSet}`);
+    
+    fetchLyrics(track.lyrics);
+
+    trackInfo.classList.remove("switching");
+    coverInner.classList.remove("switching");
+    
+    // Play
+    initAudioContext();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    audio.play();
+    setPlayingUI(true);
+    
+    // QUAN TRỌNG: Khi hát nhạc Queue, bỏ Active ở Playlist chính đi
+    const items = playlistEl.querySelectorAll(".playlist-item");
+    items.forEach(item => item.classList.remove("active"));
+    
+  }, 220);
+}
+
+// 6. Gán lại sự kiện cho nút Next và Audio Ended
+// Lưu ý: Cần remove event listener cũ hoặc sửa trực tiếp ở code trên. 
+// Cách an toàn nhất là bạn tìm đoạn code xử lý nextBtn và audio.ended ở trên và sửa lại như sau:
+
+// --- TÌM ĐOẠN NÀY Ở TRÊN FILE VÀ SỬA ---
+
+nextBtn.addEventListener("click", () => {
+  pulseElement(nextBtn);
+  playNextSong(); // <--- Đổi thành hàm mới
+});
+
+audio.addEventListener("ended", () => {
+   if (repeatMode === "one") {
+    loadTrack(currentIndex, true);
+    return;
+  }
+  // Queue logic nằm trong playNextSong
+  playNextSong(); 
+});

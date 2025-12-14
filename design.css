@@ -7,7 +7,7 @@
     "Segoe UI", sans-serif;   
 }
 @font-face {
-  font-family: "Orelia";
+  font-family: "orelia";
   src: url("./fonts/SVN-OreliaDisplay.otf") format("opentype");
 
 }
@@ -669,18 +669,25 @@ body::before {
   overflow-y: auto;
 }
 
-.playlist-item {
+playlist-item {
   display: flex;
-  flex-direction: column;
-  padding: 6px 10px;
-  border-radius: 12px;
+  flex-direction: row; /* QUAN TRỌNG: Xếp ngang để nút + nằm cạnh tên bài */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: space-between;
+  /* Khung nền mờ ảo (Mờ mờ như bạn muốn) */
+  background: rgba(255, 255, 255, 0.15); 
+  border: 1px solid rgba(255, 255, 255, 0.25); /* Viền mỏng tang */
+  backdrop-filter: blur(4px); /* Làm mờ nền phía sau */
+  padding: 6px 10px;   /* Giảm khoảng cách đệm cho gọn */
+  margin-bottom: 4px;  /* Giảm khoảng cách giữa các bài */
+  border-radius: 10px; /* Bo góc nhẹ hơn chút */
+  
+  /* Các hiệu ứng cũ */
   cursor: pointer;
-  transition:
-    background 0.18s ease,
-    transform 0.12s ease,
-    box-shadow 0.15s ease;
+  transition: background 0.18s ease, transform 0.12s ease;
   color: #FFAEE1;
   font-size: 0.82rem;
+
 }
 
 .playlist-item + .playlist-item {
@@ -691,6 +698,7 @@ body::before {
   background: rgba(255, 233, 243, 0.9);
   transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(255, 173, 212, 0.3);
+  transform: translateY(-2px); /* Bay nhẹ lên */
 }
 
 .playlist-item.active {
@@ -699,13 +707,56 @@ body::before {
   box-shadow: 0 8px 20px rgba(255, 158, 205, 0.6);
 }
 
+/* --- 2. CUSTOM SCROLLBAR (THANH CUỘN KẸO NGỌT) --- */
+
+/* Áp dụng cho danh sách playlist và cả trang web */
+::-webkit-scrollbar {
+  width: 6px; /* Thanh mảnh */
+  height: 6px;
+}
+
+/* Nền của thanh cuộn */
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1); 
+  border-radius: 10px;
+}
+
+/* Phần thanh trượt (Cục trượt) */
+::-webkit-scrollbar-thumb {
+  background: #ffb7c5; /* Hồng pastel */
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff9ecd; /* Đậm hơn khi di chuột vào */
+}
+
+/* 2. Phần thông tin bài hát (Tên + Ca sĩ) */
+/* Phần chứa Tên bài + Ca sĩ */
+.playlist-info {
+  display: flex;
+  flex-direction: column; /* Tên và ca sĩ xếp dọc */
+  justify-content: center;
+  flex-grow: 1; /* Chiếm hết chỗ trống */
+  overflow: hidden;
+  line-height: 1.2; /* Kéo 2 dòng chữ lại gần nhau hơn */
+}
+
 .playlist-title {
   font-weight: 600;
+  font-size: 0.9rem;
+  color: #ff9ecd; /* Hồng phấn chủ đạo */
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.5); /* Tỏa sáng nhẹ */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
 }
 
 .playlist-artist {
-  font-size: 0.76rem;
-  opacity: 0.85;
+  font-size: 0.75rem;
+  color: #ebb0d6; /* Hồng tím nhạt hơn cho tên ca sĩ */
 }
 
 /* RESPONSIVE */
@@ -1547,8 +1598,8 @@ body::before {
   position: fixed;
   right: 18px;
   bottom: 18px;
-  width: 40px;
-  height: 40px;
+  width: 70px;
+  height: 70px;
   border-radius: 8px;
   border: none;
   background: #d9d9f4;
@@ -1565,7 +1616,7 @@ body::before {
   align-items: center; /* Căn giữa theo chiều dọc */
   
   /* Đảm bảo mũi tên có kích thước hợp lý (nếu bạn chưa set) */
-  font-size: 18px;
+  font-size: 28px;
 }
 
 .back-to-top.show {
@@ -1575,6 +1626,60 @@ body::before {
 
 .back-to-top:hover {
   transform: translateY(-2px);
+}
+
+/* --- 3. NÚT BACK TO TOP (BONG BÓNG CAM ĐÀO) --- */
+
+/* --- NÚT BACK TO TOP (BONG BÓNG CAM ĐÀO - FINAL) --- */
+#myBtn {
+  display: none; /* JS sẽ bật nó lên sau */
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 999; /* Tăng chỉ số này lên cao nhất để luôn nổi */
+  
+  /* Hình dáng bong bóng */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  
+  /* Màu cam đào pastel */
+  background: linear-gradient(135deg, #ffccbc 0%, #ffab91 100%);
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  
+  /* Bóng đổ và hiệu ứng nổi */
+  box-shadow: 0 4px 15px rgba(255, 171, 145, 0.6), 
+              inset 2px 2px 5px rgba(255, 255, 255, 0.4);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#myBtn:hover {
+  transform: translateY(-5px) scale(1.1); /* Bay lên khi hover */
+  background: linear-gradient(135deg, #ffab91 0%, #ff8a65 100%);
+}
+
+/* Hiệu ứng sóng lan tỏa (Ripple) */
+#myBtn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: 50%;
+  border: 2px solid #ffccbc;
+  opacity: 0;
+  z-index: -1;
+}
+
+#myBtn:active::after {
+  animation: bubbleRipple 0.6s ease-out;
+}
+
+@keyframes bubbleRipple {
+  0% { transform: scale(1); opacity: 0.8; border-width: 4px; }
+  100% { transform: scale(2.2); opacity: 0; border-width: 0px; }
 }
 
 /* Responsive */
@@ -1767,4 +1872,244 @@ body::before {
     max-width: 90vw;
     height: 400px; /* Ngắn hơn trên mobile */
   }
+}
+
+/* =================== TABS & QUEUE STYLING =================== */
+
+/* 1. Header chứa Tabs (Viên thuốc) */
+.tab-header {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 99px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: inset 0 2px 6px rgba(255, 182, 205, 0.2);
+}
+
+/* 2. Style Nút Tab */
+.tab-btn {
+  border: none;
+  background: transparent;
+  padding: 8px 20px;
+  border-radius: 99px;
+  font-family: "solistaria", sans-serif; /* Font tiêu đề */
+  font-size: 1.1rem;
+  color: #8c738c;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* Tab đang chọn (Active) */
+.tab-btn.active {
+  background: linear-gradient(135deg, #ff9ecd 0%, #ffb38b 100%);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255, 158, 205, 0.5);
+  transform: scale(1.05);
+}
+
+.tab-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.6);
+  color: #ff74b2;
+}
+
+/* 3. Nội dung Tab (Ẩn/Hiện) */
+.tab-content {
+  display: none;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  animation: fadeInTab 0.5s ease;
+}
+
+.tab-content.active {
+  display: flex;
+}
+
+@keyframes fadeInTab {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 4. Queue List Styling */
+.queue-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 5px;
+  /* Thanh cuộn đẹp */
+  scrollbar-width: thin;
+  scrollbar-color: #ffc6d8 transparent;
+}
+
+.queue-title {
+  font-family: "orelia", sans-serif;
+  color: #ff9ecd;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  opacity: 0.8;
+}
+
+.queue-empty-msg {
+  text-align: center;
+  color: #a07da9;
+  font-style: italic;
+  margin-top: 40px;
+  opacity: 0.6;
+  font-size: 0.9rem;
+}
+
+.queue-list {
+  list-style: none;
+  padding: 0;
+}
+
+/* Từng bài trong Queue */
+.queue-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.2s;
+  /* Màu nền của bài trong hàng đợi */
+  background: rgba(255, 255, 255, 0.4); /* Trắng mờ 40% */
+  /* Border viền nhẹ nếu muốn */
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.queue-item:hover {
+  transform: translateX(-3px);
+  box-shadow: 0 4px 10px rgba(255, 173, 212, 0.2);
+  /* Màu nền khi di chuột vào */
+  background: rgba(253, 222, 235, 0.6); /* Hồng rất nhạt */
+}
+}
+
+.q-info {
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+}
+
+.q-title {
+  /* Font chữ cho tên bài */
+  font-family: "solistaria", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ff92ad;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.q-artist {
+  font-family: "genshino", sans-serif;
+  font-size: 0.8rem;
+  font-size: 0.75rem;
+  color: #b7cba1;
+}
+
+/* Nút xóa khỏi queue */
+.q-remove {
+  background: none;
+  border: none;
+  color: #ffaf84;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px;
+  opacity: 0.6;
+  transition: 0.2s;
+}
+
+.q-remove:hover {
+  opacity: 1;
+  color: #ff678a;
+  transform: scale(1.2);
+}
+
+/* 5. Nút Add (+) trong Playlist chính */
+/* 3. Nút Dấu Cộng (+) NHỎ GỌN */
+/* Nút Add (+) được tinh chỉnh nhỏ gọn */
+
+.btn-add-queue {
+  background: transparent;
+  border: none;
+  color: #ffb7c5; /* Hồng nhạt */
+  width: 24px; height: 24px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-left: 8px;
+  padding: 0;
+  transition: 0.2s;
+}
+.btn-add-queue:hover {
+  background: #fff;
+  color: #ff74b2;
+  box-shadow: 0 0 8px #ff9ecd;
+}
+/* 6. HIỆU ỨNG LINH HỒN BAY (Flying Dot) */
+.flying-dot {
+  position: fixed;
+  width: 16px;
+  height: 16px;
+  background: radial-gradient(circle, #fff, #ff9ecd);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 15px #ff9ecd, 0 0 30px #fff;
+  animation: flyMotion 0.8s ease-in-out forwards;
+}
+
+@keyframes flyMotion {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.2); opacity: 0; }
+}
+
+/* --- CHỈNH MÀU CHO BÀI ĐANG CHỌN (ACTIVE) --- */
+
+/* 1. Nền Gradient cho item đang chọn */
+.playlist-item.active {
+  background: linear-gradient(90deg, rgba(255, 187, 220, 0.9), rgba(250, 195, 165, 0.9));
+  box-shadow: 0 4px 12px rgba(255, 158, 205, 0.4);
+  border: none;
+  transform: scale(1.02); /* Phóng to nhẹ 1 xíu để nổi bật */
+}
+
+/* 2. Tên bài hát khi đang chọn -> Màu TRẮNG TINH */
+.playlist-item.active .playlist-title {
+  color: #5c5c5c !important; /* Dùng !important để chắc chắn đổi màu */
+  text-shadow: 0 1px 2px rgba(166, 108, 118, 0.3); /* Bóng chữ nhẹ cho rõ */
+}
+
+/* 3. Tên ca sĩ khi đang chọn -> Màu TRẮNG KEM (Hơi hồng nhẹ) */
+.playlist-item.active .playlist-artist {
+  color: #ffeef5 !important; 
+  opacity: 0.9;
+}
+
+/* 4. Nút dấu cộng khi đang chọn -> Màu TRẮNG */
+.playlist-item.active .btn-add-queue {
+  color: #fff !important;
+}
+.playlist-item.active .btn-add-queue:hover {
+  background: rgba(255,255,255,0.3);
 }

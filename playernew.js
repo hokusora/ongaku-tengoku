@@ -45,13 +45,17 @@ const allPlaylists = [
     name: "R&B",
     tracks: [
       { title: "Đừng Để Nước Mắt Rơi", artist: "VSTRA", src: "music/nuocmat.mp3", cover: "pics/yuyu/yuyu13.jpg",
-        lyrics: "lyrics/nuocmat.json" // <--- ĐẢM BẢO ĐƯỜNG DẪN NÀY ĐÚNG
-       },
-      
+        lyrics: "lyrics/nuocmat.json", // <--- ĐẢM BẢO ĐƯỜNG DẪN NÀY ĐÚNG
+        fontSet: "vi"
+      },
       { title: "Vườn Sao Băng", artist: "puppy", src: "vuonsaobang.mp3", cover: "pics/yuyu3.jpg",
-         lyrics: "lyrics/vuonsaobang.json" 
+         lyrics: "lyrics/vuonsaobang.json", 
+         fontSet: "vi"
        },
-      
+      { title: "Wrong Times", artist: "puppy", src: "wrongtimes.mp3", cover: "pics/dnha16.jpg" ,
+        lyrics: "lyrics/wrongtimes.json",
+        fontSet: "jp"
+      },
       { title: "Nếu Lúc Đó", artist: "tlinh", src: "neulucdo.mp3", cover: "pics/yuyu5.jpg" },
       { title: "In The Rain", artist: "XG", src: "in-the-rain.mp3", cover: "pics/yuyu6.jpg" },
       
@@ -61,11 +65,6 @@ const allPlaylists = [
       { title: "Anh Iu", artist: "Saabirose", src: "anh-iu.mp3", cover: "pics/dnha4.jpg" },
       
       {title: "Where You Are", artist: "NINGNING", src: "music/ningning.mp3", cover: "pics/yuki/yuki12.jpg"},
-      
-      
-      { title: "Wrong Times", artist: "puppy", src: "wrongtimes.mp3", cover: "pics/dnha16.jpg" ,
-        lyrics: "lyrics/wrongtimes.json"
-      },
       { title: "Call Me On My Phone 2", artist: "puppy", src: "music/callme22.mp3", cover: "pics/dnha20.jpg" },
       { title: "Stairway To Heaven", artist: "puppy", src: "music/stairwaytoheaven.mp3", cover: "pics/dnha17.jpg"},
       {title: "Làm lành chữa tình", artist: "tlinh", src: "music/lamlanh.mp3", cover: "pics/dnha18.jpg"},
@@ -83,7 +82,8 @@ const allPlaylists = [
           lyrics: "lyrics/fever.json"
        },
        {title: "TOXIC", artist: "MEOVV", src: "music/toxic.mp3", cover: "pics/yuki/yuki20.jpg"},
-      
+       {title: "Love Language", artist: "VIVIZ UMJI", src: "music/lovelanguage.mp3", cover: "pics/dnha/dnha75.jpg"},
+       
       
     ]
   },
@@ -91,9 +91,13 @@ const allPlaylists = [
     name: "Dreamy Vibes",
     tracks: [
        // Bạn tự thêm bài hát cho Playlist 2 vào đây sau
-       {title: "Trời Giấu Trời Mang Đi", artist: "AMEE", src: "music/troigiautroimangdi.mp3", cover: "pics/yuyu9.jpg"},
+       {title: "Trời Giấu Trời Mang Đi", artist: "AMEE", src: "music/troigiautroimangdi.mp3", cover: "pics/yuyu9.jpg",
+          lyrics:"lyrics/troigiau.json"
+       },
        {title: "Hai Mươi Hai", artist: "AMEE", src: "music/haihai.mp3", cover: "pics/yuyu11.jpg"},
-       
+        {title: "Miền Mộng Mị", artist: "AMEE", src: "music/mienmongmi.mp3", cover: "pics/dnha/dnha75.jpg",
+           lyrics: "lyrics/mienmongmi.json"
+        },
        {title: "Giấc Mơ", artist: "Catchellers", src: "music/giacmo.mp3", cover: "pics/dnha14.jpg"},
        {title: "Trong Mắt Đều Là Anh", artist: "Tiểu Lam Bối Tâm", src: "music/trongmat.mp3", cover: "pics/dnha35.jpg"},
        { title: "Thật Quá Đáng Để Yêu", artist: "AMEE", src: "music/quadang.mp3", cover: "pics/dnha22.jpg"},
@@ -119,6 +123,7 @@ const allPlaylists = [
          {title: "Batter up", artist: "BABYMONSTER", src: "music/batterup.mp3", cover: "pics/yuki/yuki19.jpg"},
        {title: "I'll Make You Cry", artist: "aespa", src: "music/imakeyoucry.mp3", cover: "pics/yuki/yuki3.jpg"},
        {title: "DAHLIA", artist: "G(I)-DLE", src: "music/dahlia.mp3", cover: "pics/yuyu/yuyu15.jpg"},
+       {title: "As If It's Your Last", artist: "BLACKPINK", src: "music/asif.mp3", cover: "pics/dnha/dnha62.jpg"},
        
     ]
   },
@@ -268,6 +273,17 @@ function loadTrack(index, autoPlay = false) {
     coverImg.src = track.cover;
     trackTitle.textContent = track.title;
     trackArtist.textContent = track.artist;
+
+    // === LOGIC MỚI: CẬP NHẬT BỘ FONT ===
+    
+    // 1. Xóa các class font-set cũ
+    lyricsContainer.classList.remove("font-set-vi", "font-set-kr", "font-set-jp", "font-set-en");
+    
+    // 2. Lấy fontSet từ dữ liệu bài hát (mặc định là "vi" nếu không có)
+    const currentFontSet = track.fontSet || "vi";
+    
+    // 3. Thêm class font-set tương ứng vào container
+    lyricsContainer.classList.add(`font-set-${currentFontSet}`);
 
     fetchLyrics(track.lyrics);
 
@@ -895,37 +911,41 @@ async function fetchLyrics(url) {
   }
 }
 
-// 2. Hàm hiển thị lời lên màn hình
+// 2. Hàm hiển thị lời lên màn hình (PHIÊN BẢN MỚI)
 function renderLyrics(data) {
   lyricsContainer.innerHTML = ""; // Xóa nội dung cũ
-  
-  // Tạo một khoảng trống đầu danh sách để dòng đầu tiên nằm giữa đẹp hơn
+  currentLyrics = data; 
+
+  // Tạo khoảng trống đầu
   const spacerTop = document.createElement("div");
   spacerTop.style.height = "100px";
   lyricsContainer.appendChild(spacerTop);
 
-  data.forEach((line, index) => {
+  data.forEach((line, i) => { 
     const p = document.createElement("p");
-    p.className = "lyric-line";
+    p.className = "lyric-line"; // Chỉ cần class gốc này là đủ
     p.textContent = line.text;
-    p.dataset.time = line.time; // Lưu thời gian vào thuộc tính data
-    p.dataset.index = index;
-
+    p.dataset.time = line.time;
+    p.dataset.index = i;
+    
     // Sự kiện Click để tua nhạc
     p.addEventListener("click", () => {
       audio.currentTime = line.time;
       audio.play();
-      setPlayingUI(true); // Đảm bảo UI chuyển sang trạng thái Play
+      setPlayingUI(true);
     });
 
     lyricsContainer.appendChild(p);
-  });
+  }); 
 
-  // Tạo khoảng trống cuối danh sách
+  // Tạo khoảng trống cuối
   const spacerBottom = document.createElement("div");
   spacerBottom.style.height = "150px";
   lyricsContainer.appendChild(spacerBottom);
 }
+
+  
+  
 
 // 3. Hàm đồng bộ lời bài hát (Highlight & Scroll)
 function syncLyrics() {

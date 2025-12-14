@@ -8,8 +8,20 @@
 }
 @font-face {
   font-family: "Orelia";
-  src: url("./fonts/SVN-OreliaDisplay.otf")format("opentype");
+  src: url("./fonts/SVN-OreliaDisplay.otf") format("opentype");
 
+}
+@font-face {
+  font-family: "volcano";
+  src: url("./fonts/GroovyVolcano.otf") format("opentype");
+}
+@font-face {
+  font-family: "hakgy3";
+  src: url("./fonts/Hakgyoansim3.otf") format("opentype");
+}
+@font-face {
+  font-family: "hakgy4";
+  src: url("./fonts/Hakgyoansim4.otf") format("opentype");
 }
 @font-face {
   font-family: "solistaria";
@@ -1674,9 +1686,9 @@ body::before {
 
 /* 4. Từng dòng lời bài hát */
 .lyric-line {
-  font-family: "genshino", sans-serif; /* Hoặc font chữ bạn thích */
+  /* font-family: "genshino", sans-serif; Hoặc font chữ bạn thích */
   font-size: 1.1rem;
-  color: #8c738c;
+  /* color: #8c738c; */
   margin-bottom: 24px; /* Khoảng cách giữa các câu */
   opacity: 0.5; /* Mờ đi khi chưa hát tới */
   transition: all 0.3s ease;
@@ -1684,6 +1696,7 @@ body::before {
   line-height: 1.5;
   text-align: center;
 }
+
 
 .lyric-line:hover {
   opacity: 0.8;
@@ -1694,8 +1707,51 @@ body::before {
   opacity: 1;
   transform: scale(1.08); /* Phóng to nhẹ */
   font-weight: 700;
-  color: #ff74b2; /* Màu nổi bật */
-  text-shadow: 0 0 10px rgba(255, 116, 178, 0.4);
+  /* color: #ff74b2; /* Màu nổi bật */
+  text-shadow: 0 0 10px rgba(255, 116, 178, 0.4); */
+}
+
+
+
+/* =================== FONT SETS (Bộ Font Tùy Chọn) =================== */
+
+/* --- Bộ 1: Tiếng Việt (Mặc định) --- */
+/* Dùng cho các bài hát V-Pop, Ballad Việt */
+.font-set-vi .lyric-line:nth-child(even) { /* Dòng chẵn */
+  font-family: "heart", cursive;
+  color: #ff74b2; 
+}
+.font-set-vi .lyric-line:nth-child(odd) { /* Dòng lẻ */
+  font-family: "volcano", cursive;
+  color: #9a99fe; 
+}
+/* Active (Dùng chung cho cả bộ) */
+.font-set-vi .lyric-line.active {
+  /* color: #ff0000; (Tùy chọn màu active riêng) */
+}
+
+
+/* --- Bộ 2: Tiếng Hàn (K-Pop) --- */
+/* Dùng font hỗ trợ tiếng Hàn tốt (ví dụ: hakgy3, hakgy4) */
+.font-set-kr .lyric-line:nth-child(even) {
+  font-family: "hakgy3", sans-serif;
+  color: #ff9ecd; /* Hồng pastel */
+}
+.font-set-kr .lyric-line:nth-child(odd) {
+  font-family: "hakgy4", sans-serif;
+  color: #8ba0ff; /* Xanh pastel */
+}
+
+
+/* --- Bộ 3: Tiếng Nhật (J-Pop / Anime) --- */
+/* Dùng font Genshino hoặc font Nhật khác */
+.font-set-jp .lyric-line:nth-child(even) {
+  font-family: "genshino", sans-serif;
+  color: #13efca; 
+}
+.font-set-jp .lyric-line:nth-child(odd) {
+  font-family: "genshino", sans-serif; /* Có thể dùng cùng font */
+  color: #ff6f91; /* Hồng đậm */
 }
 
 /* RESPONSIVE: Mobile chuyển về dọc */

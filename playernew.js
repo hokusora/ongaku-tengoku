@@ -190,7 +190,12 @@ const allPlaylists = [
          {title: "Recollection", artist: "October", src: "music/recollection.mp3", cover: "pics/dnha/dnha71.jpg"}
       
     ]
-  } // <--- KHÔNG cần dấu phẩy ở cuối nếu đây là phần tử cuối cùng
+  },// <--- KHÔNG cần dấu phẩy ở cuối nếu đây là phần tử cuối cùng
+
+  {
+    name: "abcxyz",
+    tracks: []
+  }
 ];
 
 // Khởi tạo biến theo dõi Playlist hiện tại
@@ -1233,3 +1238,83 @@ audio.addEventListener("ended", () => {
   // Queue logic nằm trong playNextSong
   playNextSong(); 
 });
+
+// =================== LOGIC UPLOAD CÁ NHÂN (V2 - CÓ LƯU LIST) ===================
+const customAudioInput = document.getElementById('custom-audio');
+const customCoverInput = document.getElementById('custom-cover');
+const uploadStatus = document.getElementById('upload-status');
+
+// Biến lưu tạm ảnh cover (nếu người dùng chọn ảnh trước)
+let tempCoverUrl = "pics/dnha1.jpg"; // Ảnh mặc định nếu chưa chọn
+
+if (customAudioInput && customCoverInput) {
+
+  // 1. Xử lý khi chọn NHẠC
+  customAudioInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const fileUrl = URL.createObjectURL(file);
+      const fileName = file.name.replace(/\.[^/.]+$/, ""); // Lấy tên file
+      
+      // --- TÌM PLAYLIST ĐỂ LƯU ---
+      // Tìm playlist có tên "Playlist Của Tui ☁️" hoặc lấy playlist cuối cùng
+      let targetIndex = allPlaylists.findIndex(p => p.name === "abcxyz");
+      if (targetIndex === -1) targetIndex = allPlaylists.length - 1; // Fallback
+
+      // Tạo đối tượng bài hát mới
+      const newTrack = {
+        title: fileName,
+        artist: "watashi",
+        src: fileUrl,
+        cover: tempCoverUrl, // Dùng ảnh cover đang chọn
+        fontSet: "vi"
+      };
+
+      // Đẩy bài hát vào danh sách
+      allPlaylists[targetIndex].tracks.push(newTrack);
+
+      // --- CẬP NHẬT GIAO DIỆN ---
+      // 1. Chuyển playlist hiện tại sang playlist upload
+      currentPlaylistIndex = targetIndex; 
+      
+      // 2. Cập nhật tên Playlist trên Header (nếu có)
+      const headerTitle = document.getElementById('playlist-header-title');
+      if(headerTitle) headerTitle.textContent = allPlaylists[currentPlaylistIndex].name;
+
+      // 3. Gọi hàm render lại danh sách (để hiện bài mới)
+      // Hàm này thường tên là loadPlaylist hoặc renderPlaylist trong code gốc của bạn
+      if (typeof loadPlaylist === "function") {
+        loadPlaylist(currentPlaylistIndex);
+      } else {
+         // Nếu không tìm thấy hàm, tự reload trang (hoặc báo lỗi nhẹ)
+         console.log("Đã thêm vào list, vui lòng bấm Next Playlist để refresh");
+      }
+
+      // 4. Phát bài hát vừa thêm (là bài cuối cùng trong mảng)
+      const newTrackIndex = allPlaylists[targetIndex].tracks.length - 1;
+      
+      // Gọi hàm loadTrack và playTrack (có sẵn trong player của bạn)
+      if (typeof loadTrack === "function") loadTrack(newTrackIndex);
+      if (typeof playTrack === "function") playTrack();
+      else audio.play(); // Fallback
+
+      // Thông báo
+      uploadStatus.textContent = `Đã thêm "${fileName}" vào Playlist! 🎵`;
+    }
+  });
+
+  // 2. Xử lý khi chọn ẢNH COVER
+  customCoverInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      tempCoverUrl = URL.createObjectURL(file);
+      
+      // Cập nhật ngay ảnh trên đĩa xoay cho đẹp
+      if(coverImg) coverImg.src = tempCoverUrl;
+      
+      // Nếu bài hát đang phát là bài upload, cập nhật luôn ảnh cho nó
+      // (Logic này tùy chọn, giúp đồng bộ ngay lập tức)
+      uploadStatus.textContent = "Đã lưu ảnh cover cho bài hát tiếp theo! ✨";
+    }
+  });
+}

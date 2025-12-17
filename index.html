@@ -43,6 +43,8 @@
 
 <div class="player-container">
     <!-- PLAYER FULL -->
+
+    
     <div class="player">
 
       <div class="player-header">
@@ -125,11 +127,17 @@
         </div>
         <ul class="playlist" id="playlist"></ul>
 
+        
       </div> <!-- END player-main -->
+
+      
 
     </div> <!-- END .player -->
 
+<div class= "right">
 <div class="lyrics-panel right-panel-tabs">
+
+
   <div class="tab-header">
     <button class="tab-btn active" id="tab-lyrics-btn">Lời bài hát</button>
     <button class="tab-btn" id="tab-queue-btn">Hàng đợi</button>
@@ -150,8 +158,28 @@
     </div>
   </div>
 </div>
+<div class="user-upload-panel">
+  <h3 class="upload-title">✨ Upload Your Vibe ✨</h3>
+  <div class="upload-buttons">
+    <label for="custom-audio" class="upload-btn">
+      <i class="fa-solid fa-music"></i> Chọn Nhạc
+    </label>
+    <input type="file" id="custom-audio" accept="audio/*" hidden />
 
+    <label for="custom-cover" class="upload-btn">
+      <i class="fa-solid fa-image"></i> Chọn Ảnh
+    </label>
+    <input type="file" id="custom-cover" accept="image/*" hidden />
   </div>
+  <p id="upload-status" class="upload-status">Upload nhạc mp3 & ảnh cover để chill</p>
+</div>
+</div>
+
+    
+</div>
+  
+
+  
 
     <!-- SECTION MEMORIES — xuất hiện khi scroll xuống -->
         <section class="memories">

@@ -281,6 +281,8 @@ body::before {
   flex-direction: column;
   align-items: center;
   gap: 14px;
+   flex: 1; /* Chiếm không gian linh hoạt */
+  min-height: 0; /* Quan trọng: fix lỗi overflow */
 }
 
 /* COVER -> ĐĨA TRÒN XOAY */
@@ -660,7 +662,7 @@ body::before {
 .playlist {
   margin-top: 10px;
   width: 100%;
-  max-height: 180px;
+  max-height: 1480px;
   padding: 6px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.85);
@@ -1735,7 +1737,7 @@ playlist-item {
 /* 1. Container bao quanh Player và Lyrics */
 .player-container {
   display: flex;
-  align-items: flex-start; /* Căn hàng trên cùng */
+  align-items: stretch;    /* Kéo dãn chiều cao 2 cột bằng nhau */
   justify-content: center;
   gap: 40px; /* Khoảng cách giữa Player và Lyrics */
   width: 100%;
@@ -1747,7 +1749,7 @@ playlist-item {
 /* 2. Khung Lyrics (Bên phải) */
 .lyrics-panel {
   flex: 1; /* Chiếm phần còn lại */
-  height: 580px; /* Chiều cao bằng hoặc tương đương Player */
+  /* height: 180px; Chiều cao bằng hoặc tương đương Player */
   background: rgba(255, 255, 255, 0.6); /* Nền mờ nhẹ hơn Player */
   border-radius: 28px;
   padding: 30px;
@@ -1756,6 +1758,8 @@ playlist-item {
   display: flex;
   flex-direction: column;
   overflow: hidden; /* Ẩn thanh cuộn thừa */
+  /* min-height: 100%;        Đảm bảo nó cao hết cỡ */
+  /* height: auto;            Ăn theo chiều cao của main-display */
 }
 
 .lyrics-header {
@@ -1770,6 +1774,7 @@ playlist-item {
 /* 3. Vùng nội dung lời bài hát (Có thanh cuộn) */
 .lyrics-content {
   flex: 1;
+  max-height:880px;
   overflow-y: auto;
   padding-right: 10px;
   /* Ẩn thanh cuộn nhưng vẫn cuộn được (cho đẹp) */
@@ -1867,11 +1872,7 @@ playlist-item {
     gap: 30px;
   }
   
-  .lyrics-panel {
-    width: 360px; /* Bằng width của Player */
-    max-width: 90vw;
-    height: 400px; /* Ngắn hơn trên mobile */
-  }
+  
 }
 
 /* =================== TABS & QUEUE STYLING =================== */
@@ -2112,4 +2113,137 @@ playlist-item {
 }
 .playlist-item.active .btn-add-queue:hover {
   background: rgba(255,255,255,0.3);
+}
+
+/* --- CSS CHO KHUNG UPLOAD CÁ NHÂN --- */
+.user-upload-panel {
+  margin-top: 0px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(255, 158, 205, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: 0.3s;
+  height: auto; /* Chiều cao tự động */
+}
+
+.user-upload-panel:hover {
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 40px rgba(255, 158, 205, 0.35);
+}
+
+.upload-title {
+  font-family: "solistaria", sans-serif;
+  background: linear-gradient(120deg, #ff9ecd, #8ba0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.upload-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  background: linear-gradient(135deg, #ffc6d8, #ff9ecd);
+  color: #fff;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: "genshino", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(255, 158, 205, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.upload-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 158, 205, 0.6);
+  background: linear-gradient(135deg, #ff9ecd, #ffc6d8);
+}
+
+.upload-btn i {
+  font-size: 1.1rem;
+}
+
+.upload-status {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: #7a8cff;
+  font-family: "genshino", sans-serif;
+  font-style: italic;
+}
+
+/* Khung Lyric - Quan trọng để bằng chiều cao Player */
+.tab-content-lyrics {
+  flex: 1;            /* Tự động dãn cao để lấp đầy khoảng trống */
+  display: flex;
+  flex-direction: column;
+  /* Reset các chiều cao cố định cũ nếu có */
+  height: auto !important; 
+  max-height: none !important;
+  overflow-y: auto;        /* Cho phép cuộn nếu lyric quá dài */
+  /* Giữ nguyên các style màu nền/border cũ của bạn ở đây */
+  height: 0;               /* Mẹo CSS: giúp scroll hoạt động tốt trong flex */
+  min-height: 400px;       /* Chiều cao tối thiểu */
+  margin-top: 20px;     /* Tạo khoảng cách với khung upload bên dưới */
+}
+
+/* --- RESPONSIVE: CHUYỂN VỀ DỌC KHI MÀN HÌNH NHỎ (MOBILE) --- */
+@media (max-width: 850px) {
+  .player-container {
+    flex-direction: column; /* Quay về xếp dọc */
+    align-items: center;
+  }
+  .lyrics-panel {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+/* --- FIX LỖI THỪA KHOẢNG TRẮNG (Kéo dài Playlist) --- */
+
+
+  
+  /* Mẹo: Nếu bạn thấy TỔNG THỂ cả 2 khung vẫn quá cao so với màn hình, 
+     hãy bỏ dấu comment dòng dưới để giới hạn chiều cao lại (ví dụ 600px hay 80% màn hình) */
+  /* height: 80vh; */ 
+  /* max-height: 650px; */
+}
+
+/* 2. Kéo dài danh sách bài hát để lấp đầy khoảng trống */
+#playlist {
+  flex-grow:1;       /* LỆNH QUAN TRỌNG: Tự động dãn cao hết mức có thể */
+  overflow-y: auto;   /* Hiện thanh cuộn nếu danh sách quá dài */
+  min-height: 0;      /* Fix lỗi không cuộn được trên một số trình duyệt */
+ max-height: none !important; /* Xóa max-height cũ */
+    width: 100%;
+  
+  /* Thẩm mỹ cho danh sách */
+  margin-top: 15px;   /* Cách phần nút bấm bên trên ra một chút */
+  padding-right: 5px; /* Để chừa chỗ cho thanh cuộn đẹp hơn */
+  border-top: 1px solid rgba(255, 255, 255, 0.3); /* (Tùy chọn) Kẻ ngang ngăn cách nhẹ */
+  padding-top: 10px;
+}
+
+
+/* ===== THU NHỎ LYRICS PANEL ===== */
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Khoảng cách giữa lyrics và upload panel */
+  flex: 1; /* Chiếm phần không gian còn lại */
+  max-width: 400px; /* Giới hạn chiều rộng */
 }
